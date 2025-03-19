@@ -7,9 +7,9 @@ export const App: FC = () => {
   return (
     <>
       <BrowserRouter>
-      <Routes>
-        <Route path="/signin" element={<Signin/>} />
-      </Routes>
+        <Routes>
+          <Route path="/signin" element={<Signin />} />
+        </Routes>
       </BrowserRouter>
     </>
   );
