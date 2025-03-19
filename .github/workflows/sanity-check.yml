@@ -11,12 +11,12 @@ jobs:
 
       - name: Install Packages
         run: |
-        working-directory: ./frontend
+        working-directory: frontend
           npm install
 
       - name: Lint check
         run: |
-        working-directory: ./frontend
+        working-directory: frontend
           npm run lint
 
     #   - name: Lint check
