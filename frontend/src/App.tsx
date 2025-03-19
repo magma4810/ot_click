@@ -1,12 +1,10 @@
-import './App.css'
-import { Signin } from './components/Signin'
+import "./App.css";
+import { Signin } from "./components/Signin";
 
-export const App = () =>{
-
+export const App = () => {
   return (
     <>
-      <Signin/>
+      <Signin />
     </>
-  )
-}
-
+  );
+};
