@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "lint-staged": {
-    "*.{ts,tsx}": "eslint --fix",
-    "*.{ts,tsx,css}": "prettier --write"
+    "frontend/*.{ts,tsx}": "eslint --fix",
+    "frontend/*.{ts,tsx,css}": "prettier --write"
   }
 }
