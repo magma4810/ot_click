@@ -6,7 +6,7 @@ import { FC } from "react";
 export const App: FC = () => {
   return (
     <>
-      <BrowserRouter>
+      <BrowserRouter  basename="/ot_click">
         <Routes>
           <Route path="/signin" element={<Signin />} />
         </Routes>
