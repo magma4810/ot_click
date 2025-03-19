@@ -1,27 +1,31 @@
 name: Deploy to GithubPages
 
-on: pull_request
+on:
+  pull_request:
+    branches:
+      - main 
+
 permissions:
   contents: write
+
 jobs:
   deploy-to-gh-pages:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
       - name: Install Packages
-        run: |
-        working-directory: frontend
-          npm install
+        working-directory: frontend  
+        run: npm install
 
       - name: Build
-        run: |
-        working-directory: frontend
-          npm run build
+        working-directory: frontend  
+        run: npm run build
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          working-directory: frontend
-          folder: dist
+          branch: gh-pages  
+          folder: frontend/dist
