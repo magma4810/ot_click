@@ -8,7 +8,7 @@ export const App: FC = () => {
     <>
       <HashRouter>
         <Routes>
-          <Route path="/signin" element={<Signin />} />
+          <Route path="signin" element={<Signin />} />
         </Routes>
       </HashRouter>
     </>
