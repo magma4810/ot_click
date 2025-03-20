@@ -3,16 +3,14 @@ export type InputProps = {
   img: string;
 };
 
-
 export type ModalProps = {
-    name: string;
-    action: string;
-    title: string;
-    href: string;
-    children?: React.ReactNode;
-  };
-  
-  export type SignupProps = {
-    children?: React.ReactNode;
-  };
+  name: string;
+  action: string;
+  title: string;
+  href: string;
+  children?: React.ReactNode;
+};
 
+export type SignupProps = {
+  children?: React.ReactNode;
+};

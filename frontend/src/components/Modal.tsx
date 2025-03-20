@@ -6,7 +6,7 @@ import arrow from "../assets/arrow.png";
 import key from "../assets/key.png";
 import user from "../assets/user.png";
 
-export const Modal: FC<ModalProps> = ({children,...props}) => {
+export const Modal: FC<ModalProps> = ({ children, ...props }) => {
   return (
     <div className=" flex w-[100vw] h-screen bg-gradient-to-tl from-blue-900 via-emerald-300 to-indigo-700 items-center justify-center">
       <div className=" flex bg-emerald-50 w-[70%] h-[70%] rounded-xl justify-evenly items-center">
@@ -18,13 +18,31 @@ export const Modal: FC<ModalProps> = ({children,...props}) => {
             <Input placeholder={"Password"} img={key} />
             {children}
           </div>
-          <a href={props.name === "Create" ? "/ot_click/#/signin" : "/ot_click/"}className=" flex justify-center items-center bg-emerald-400 w-[50%] h-[10%] rounded-3xl cursor-pointer">
+          <a
+            href={props.name === "Create" ? "/ot_click/#/signin" : "/ot_click/"}
+            className=" flex justify-center items-center bg-emerald-400 w-[50%] h-[10%] rounded-3xl cursor-pointer"
+          >
             {props.name}
           </a>
           <div className=" flex w-[100%] justify-evenly items-center">
-            {props.action === "Crete your account" ? <>{props.action}<u><a href="/ot_click/#/signup">user</a></u>or
-            <u><a href="/ot_click/#/company-signup"> company </a></u>
-            </> : <><u><a href="/ot_click/#/signin">{props.action}</a></u></>}
+            {props.action === "Crete your account" ? (
+              <>
+                {props.action}
+                <u>
+                  <a href="/ot_click/#/signup">user</a>
+                </u>
+                or
+                <u>
+                  <a href="/ot_click/#/company-signup"> company </a>
+                </u>
+              </>
+            ) : (
+              <>
+                <u>
+                  <a href="/ot_click/#/signin">{props.action}</a>
+                </u>
+              </>
+            )}
             <img src={arrow} alt="" className=" w-[8%] h-auto" />
           </div>
         </div>
