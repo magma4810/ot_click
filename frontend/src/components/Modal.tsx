@@ -8,7 +8,7 @@ import user from "../assets/user.png";
 
 export const Modal: FC<ModalProps> = ({ children, ...props }) => {
   return (
-    <div className=" flex w-[100vw] h-screen bg-gradient-to-tl from-blue-900 via-emerald-300 to-indigo-700 items-center justify-center">
+    <div className=" flex w-[100vw] h-screen items-center justify-center">
       <div className=" flex bg-emerald-50 w-[70%] h-[70%] rounded-xl justify-evenly items-center">
         <img src={logo} alt="" className=" w-[35%] h-[auto]" />
         <div className=" flex flex-col items-center justify-evenly h-[100%] w-[30%]">
@@ -19,7 +19,11 @@ export const Modal: FC<ModalProps> = ({ children, ...props }) => {
             {children}
           </div>
           <a
-            href={props.name === "Create" ? "/ot_click/#/signin" : "/ot_click/"}
+            href={
+              props.name === "Create"
+                ? "/ot_click/#/signin"
+                : "/ot_click/#/vacancies"
+            }
             className=" flex justify-center items-center bg-emerald-400 w-[50%] h-[10%] rounded-3xl cursor-pointer"
           >
             {props.name}

@@ -14,3 +14,10 @@ export type ModalProps = {
 export type SignupProps = {
   children?: React.ReactNode;
 };
+
+export type IconSidebarProps = {
+  src: string;
+  title: string;
+  href: string;
+  hash?: string;
+};
