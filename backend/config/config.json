@@ -1,23 +1,38 @@
 {
   "development": {
-    "username": "postgres",
-    "password": "123",
-    "database": "ot_click_database",
-    "host": "localhost",
-    "dialect": "postgres"
+    "username": "postgres.irihbqadbzllthvseden",
+    "password": "prFN4yhl1p8c7LLX",
+    "database": "ot_click",
+    "host": "aws-0-eu-central-1.pooler.supabase.com",
+    "port": 6543,
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    }
   },
   "test": {
     "username": "postgres",
     "password": "123",
     "database": "ot_click_database",
     "host": "localhost",
+    "port": 3001,
     "dialect": "postgres"
   },
   "production": {
     "username": "postgres",
-    "password": "123",
-    "database": "ot_click_database",
-    "host": "localhost",
-    "dialect": "postgres"
+    "password": "prFN4yhl1p8c7LLX",
+    "database": "postgres",
+    "host": "db.irihbqadbzllthvseden.supabase.co",
+    "port": 6543,
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    }
   }
 }
