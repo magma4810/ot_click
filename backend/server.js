@@ -7,7 +7,6 @@ import { sequelize } from './database.js';
 
 const PORT = 3001;
 const app = express();
-
 app.use(json())
 
 app.use(cors());

@@ -6,7 +6,7 @@ import { IconSidebarProps } from "../types";
 
 export const Sidebar: FC = () => {
   return (
-    <div className="flex flex-col justify-between w-[12vw] h-[100vh] border-dashed border-indigo-500 bg-emerald-700/50 border-2 bg-opacity-50 fixed">
+    <div className="flex flex-col justify-between w-[12vw] border-dashed border-indigo-500 bg-emerald-700/50 border-2 bg-opacity-50 sticky top-0 h-screen">
       <div className=" flex flex-col justify-evenly h-[40%]">
         <IconSidebar
           src={vacancies}

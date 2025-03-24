@@ -23,27 +23,28 @@ export type IconSidebarProps = {
 };
 
 export type Vacancies = {
-  id: number,
-  title: string,
-  description: string,
-  companyName: string,
-  location: string,
-  salary: number,
-  englishLvl: string,
-  grade: string,
-  tags: string,
-  is_active: boolean,
-  experience: string,
-  skills: string,
-  employmentType: string,
-  category_id: string,
-  subscribe: number
-}
+  id: number;
+  title: string;
+  description: string;
+  companyName: string;
+  location: string;
+  salary: number;
+  englishLvl: string;
+  grade: string;
+  tags: string;
+  is_active: boolean;
+  experience: string;
+  skills: string;
+  employmentType: string;
+  category_id: string;
+  subscribe: number;
+};
 
 export type VacanciesState = {
-  vacancies: Vacancies[],
-}
+  vacancies: Vacancies[];
+  loading: boolean;
+};
 
 export type VacancyCardProps = {
-  data: Vacancies
-}
+  data: Vacancies;
+};
