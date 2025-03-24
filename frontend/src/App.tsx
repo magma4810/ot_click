@@ -5,8 +5,29 @@ import { Signup } from "./components/Signup";
 import { FC } from "react";
 import { CompanySignup } from "./components/CompanySignup";
 import { Sidebar } from "./components/Sidebar";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { changeVacancies } from "./store/vacancies.slice";
+import { Vacancies } from "./components/Vacancies";
 
 export const App: FC = () => {
+  const dispath = useDispatch();
+  useEffect(() => {
+      try{
+          fetch("/api/getVacancies", {
+              method: 'GET',
+              headers: {
+                  'Accept': 'application/json',
+              },
+          }).then((response) => response.json())
+          .then(data => {
+              dispath(changeVacancies(data))
+          })
+      }catch(error){
+          console.error("Ошибка при загрузке данных:", error);
+      }
+  },[]);
+  
   return (
     <>
       <HashRouter>
@@ -14,8 +35,8 @@ export const App: FC = () => {
           <Route path="signin" element={<Signin />} />
           <Route path="signup" element={<Signup />} />
           <Route path="company-signup" element={<CompanySignup />} />
-          <Route path="vacancies" element={<Sidebar />} />
-          <Route path="my-vacancies" element={<Sidebar />} />
+          <Route path="vacancies" element={ <div className="flex"><Sidebar /> <Vacancies/></div>} />
+          <Route path="my-vacancies" element={<div className="flex"><Sidebar /> <Vacancies/></div>} />
         </Routes>
       </HashRouter>
     </>

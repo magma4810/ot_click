@@ -6,7 +6,7 @@ import { IconSidebarProps } from "../types";
 
 export const Sidebar: FC = () => {
   return (
-    <div className="flex flex-col justify-between w-[15vw] h-[100vh] border-dashed border-indigo-500 bg-emerald-700/50 border-2 bg-opacity-50">
+    <div className="flex flex-col justify-between w-[12vw] h-[100vh] border-dashed border-indigo-500 bg-emerald-700/50 border-2 bg-opacity-50 fixed">
       <div className=" flex flex-col justify-evenly h-[40%]">
         <IconSidebar
           src={vacancies}
@@ -34,7 +34,6 @@ export const Sidebar: FC = () => {
 
 const IconSidebar: FC<IconSidebarProps> = ({ ...props }) => {
   const isActive = (path: string) => {
-    console.log(location.hash, path);
     return location.hash === path;
   };
   return (
