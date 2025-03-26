@@ -1,0 +1,48 @@
+{
+  "index.html": {
+    "file": "assets/index-2VSI9lby.js",
+    "name": "index",
+    "src": "index.html",
+    "isEntry": true,
+    "css": [
+      "assets/index-CNdper_2.css"
+    ],
+    "assets": [
+      "assets/otclick_logo-CTNnzU82.png",
+      "assets/key-Bx8bQ6rd.png",
+      "assets/user-8tTi5gjM.png",
+      "assets/company-DxOxDRtx.png",
+      "assets/vacancies-Bsk_vY7b.png",
+      "assets/my_vacancies-BAM_Gi_Z.png",
+      "assets/logout-odkD6gs5.png"
+    ]
+  },
+  "src/assets/company.png": {
+    "file": "assets/company-DxOxDRtx.png",
+    "src": "src/assets/company.png"
+  },
+  "src/assets/key.png": {
+    "file": "assets/key-Bx8bQ6rd.png",
+    "src": "src/assets/key.png"
+  },
+  "src/assets/logout.png": {
+    "file": "assets/logout-odkD6gs5.png",
+    "src": "src/assets/logout.png"
+  },
+  "src/assets/my_vacancies.png": {
+    "file": "assets/my_vacancies-BAM_Gi_Z.png",
+    "src": "src/assets/my_vacancies.png"
+  },
+  "src/assets/otclick_logo.png": {
+    "file": "assets/otclick_logo-CTNnzU82.png",
+    "src": "src/assets/otclick_logo.png"
+  },
+  "src/assets/user.png": {
+    "file": "assets/user-8tTi5gjM.png",
+    "src": "src/assets/user.png"
+  },
+  "src/assets/vacancies.png": {
+    "file": "assets/vacancies-Bsk_vY7b.png",
+    "src": "src/assets/vacancies.png"
+  }
+}
