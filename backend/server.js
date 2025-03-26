@@ -7,47 +7,42 @@ import { userRouter } from './routes/user.routes.js';
 import { sequelize } from './database.js';
 
 const FileStore = fileStore(session);
-const PORT = 3000;
+// const PORT = 3000;
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
-app.use(
-  session({
-    store: new FileStore(),
-    secret: 'your-secret-key',
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      maxAge: 86400000,
-      httpOnly: true,
-      secure: false 
-    }
-  })
-);
+// app.use(
+//   session({
+//     secret: 'your-secret-key',
+//     resave: false,
+//     saveUninitialized: false,
+//     cookie: { secure: true }
+//   })
+// );
 
 app.use('/api', userRouter);
-process.on('SIGTERM', async () => {
-  await sequelize.close();
-  server.close();
+// process.on('SIGTERM', async () => {
+//   await sequelize.close();
+//   server.close();
+// });
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Ошибка сервера' });
 });
-app.use((req, res, next) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
-  console.log('Headers:', req.headers);
-  console.log('Body:', req.body);
-  next();
-});
+// app.listen(PORT, () => {
+//   console.log(`Сервер запущен на порту ${PORT}`);
+// });
 const startServer = async () => {
   try {
-    await sequelize.sync();
-    console.log('База данных синхронизирована.');
-    
-    app.listen(PORT, 'localhost', () => {
-      console.log(`Сервер запущен на http://localhost:${PORT}`);
-    });
+    await sequelize.authenticate();
+    console.log('База данных подключена');
+    await sequelize.sync(); // Синхронизация моделей с БД
+    console.log('База данных синхронизирована');
   } catch (error) {
-    console.error('Ошибка синхронизации базы данных:', error);
+    console.error('Ошибка подключения к базе данных:', error);
   }
 };
 

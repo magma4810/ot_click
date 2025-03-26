@@ -38,7 +38,7 @@ export const App: FC = () => {
 
   const fetchVacancies = useCallback(async (retryCount = 0) => {
     try {
-      const response = await fetch("/api/getVacancies", {
+      const response = await fetch("https://backend-j7q0rz5h6-vannesals-projects.vercel.app/api/getVacancies", {
         method: "GET",
         headers: {
           Accept: "application/json",

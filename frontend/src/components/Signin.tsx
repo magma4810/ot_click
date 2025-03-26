@@ -12,7 +12,7 @@ export const Signin: FC = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("/api/loginUser", {
+      const response = await fetch("https://backend-silk-one-80.vercel.app/api/loginUser", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
