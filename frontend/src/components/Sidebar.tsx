@@ -1,8 +1,11 @@
 import { FC } from "react";
 import vacancies from "../assets/vacancies.png";
 import my_vacancies from "../assets/my_vacancies.png";
-import logout from "../assets/logout.png";
+import logoutpng from "../assets/logout.png";
+import { logout } from "../store/auth.slice";
 import { IconSidebarProps } from "../types";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export const Sidebar: FC = () => {
   return (
@@ -23,7 +26,7 @@ export const Sidebar: FC = () => {
       </div>
       <div className=" h-[18%]">
         <IconSidebar
-          src={logout}
+          src={logoutpng}
           title={"Logout"}
           href={"/ot_click/#/signin"}
         />
@@ -33,15 +36,49 @@ export const Sidebar: FC = () => {
 };
 
 const IconSidebar: FC<IconSidebarProps> = ({ ...props }) => {
+  const navigate = useNavigate();
   const isActive = (path: string) => {
     return location.hash === path;
   };
+  const dispatch = useDispatch();
+
+  const handleLogout = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:3001/api/logoutUser", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Logout failed");
+      }
+      dispatch(logout());
+      navigate("/signin");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
+
+  const handleClick = (e: React.MouseEvent) => {
+    if (props.title === "Logout") {
+      handleLogout(e);
+    }
+  };
+
   return (
-    <a href={props.href}>
+    <a href={props.href} onClick={handleClick} className="block">
       <div
-        className={` flex items-center flex-col ${props.hash ? (isActive(props.hash) ? "text-emerald-200 font-bold border-l-3 text-glow" : "") : null} text-xl`}
+        className={`flex items-center flex-col ${
+          props.hash && isActive(props.hash)
+            ? "text-emerald-200 font-bold border-l-3 text-glow"
+            : ""
+        } text-xl`}
       >
-        <img src={props.src} alt="" className=" w-[35%] h-[auto]" />
+        <img src={props.src} alt="" className="w-[35%] h-auto" />
         <span>{props.title}</span>
       </div>
     </a>

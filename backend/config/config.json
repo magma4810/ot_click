@@ -2,7 +2,7 @@
   "development": {
     "username": "postgres.irihbqadbzllthvseden",
     "password": "prFN4yhl1p8c7LLX",
-    "database": "ot_click",
+    "database": "postgres",
     "host": "aws-0-eu-central-1.pooler.supabase.com",
     "port": 6543,
     "dialect": "postgres",
