@@ -8,7 +8,10 @@ export default defineConfig({
   base: "/ot_click/",
   server: {
     proxy: {
-      "/api": "http://localhost:3001",
+      "/api": {
+        target: "http://localhost:3000",
+        secure: false,
+      },
     },
   },
 });

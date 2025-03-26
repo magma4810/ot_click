@@ -45,7 +45,7 @@ const IconSidebar: FC<IconSidebarProps> = ({ ...props }) => {
   const handleLogout = async (e: React.MouseEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:3001/api/logoutUser", {
+      const response = await fetch("/api/logoutUser", {
         method: "POST",
         credentials: "include",
         headers: {

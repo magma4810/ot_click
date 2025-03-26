@@ -12,7 +12,7 @@ export const Signin: FC = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:3001/api/loginUser", {
+      const response = await fetch("/api/loginUser", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -33,7 +33,6 @@ export const Signin: FC = () => {
       navigate("/vacancies");
     } catch (error) {
       console.error("Login error:", error);
-      // Можно добавить уведомление об ошибке
     }
   };
 

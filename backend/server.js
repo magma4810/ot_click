@@ -7,13 +7,10 @@ import { userRouter } from './routes/user.routes.js';
 import { sequelize } from './database.js';
 
 const FileStore = fileStore(session);
-const PORT = 3001;
+const PORT = 3000;
 const app = express();
 
-app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:3000'], 
-  credentials: true
-}));
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 app.use(
@@ -30,14 +27,17 @@ app.use(
   })
 );
 
-app.get('/api/check-auth', (req, res) => {
-  if (req.cookies.authenticated === 'true') { 
-    return res.status(200).end();
-  }
-  res.status(401).end();
-});
 app.use('/api', userRouter);
-
+process.on('SIGTERM', async () => {
+  await sequelize.close();
+  server.close();
+});
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  console.log('Headers:', req.headers);
+  console.log('Body:', req.body);
+  next();
+});
 const startServer = async () => {
   try {
     await sequelize.sync();

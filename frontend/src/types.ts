@@ -9,7 +9,7 @@ export type ModalProps = {
   title: string;
   href: string;
   children?: React.ReactNode;
-  onClick: (e: React.MouseEvent) => Promise<void>;
+  onClick?: (e: React.MouseEvent) => Promise<void>;
 };
 
 export type SignupProps = {
