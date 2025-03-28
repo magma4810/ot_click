@@ -41,11 +41,11 @@ const IconSidebar: FC<IconSidebarProps> = ({ ...props }) => {
     return location.hash === path;
   };
   const dispatch = useDispatch();
-
+  const API_URL = import.meta.env.VITE_API_URL;
   const handleLogout = async (e: React.MouseEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch("/api/logoutUser", {
+      const response = await fetch(`${API_URL}/logoutUser`, {
         method: "POST",
         credentials: "include",
         headers: {

@@ -13,6 +13,7 @@ import { login } from "./store/auth.slice";
 import Cookies from "js-cookie";
 import { changeLoading, changeVacancies } from "./store/vacancies.slice";
 export const App: FC = () => {
+  const API_URL = import.meta.env.VITE_API_URL;
   const dispatch = useDispatch();
   const [isAuthChecked, setIsAuthChecked] = useState(false);
   const isAuthenticated = useSelector(
@@ -33,12 +34,12 @@ export const App: FC = () => {
 
     initializeApp();
   }, [dispatch]);
-  const MAX_RETRIES = 3; // Максимальное количество попыток
-  const RETRY_DELAY = 1000; // Задержка между попытками в миллисекундах
+  const MAX_RETRIES = 3;
+  const RETRY_DELAY = 1000; 
 
   const fetchVacancies = useCallback(async (retryCount = 0) => {
     try {
-      const response = await fetch("https://backend-j7q0rz5h6-vannesals-projects.vercel.app/api/getVacancies", {
+      const response = await fetch(`${API_URL}/getVacancies`, {
         method: "GET",
         headers: {
           Accept: "application/json",

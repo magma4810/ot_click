@@ -1,10 +1,14 @@
-import { defineConfig } from "vite";
+import { defineConfig,loadEnv } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import tailwindcss from "@tailwindcss/vite";
 
-export default defineConfig({
-  plugins: [react(), tailwindcss()],
-  base: '/ot_click/', // Убираем условность для production
+export default defineConfig(({ mode }) => {
+  // Загружаем переменные окружения в зависимости от режима (development/production)
+  const env = loadEnv(mode, process.cwd(), "");
+
+  return {
+    plugins: [react(), tailwindcss()],
+    base: '/ot_click/', // Убираем условность для production
   build: {
     outDir: 'dist/ot_click', // Явно указываем выходную папку
     assetsDir: 'assets',
@@ -24,4 +28,8 @@ export default defineConfig({
       },
     },
   },
+    define: {
+      "process.env": env, // для совместимости с некоторыми библиотеками
+    },
+  };
 });

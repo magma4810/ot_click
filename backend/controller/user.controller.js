@@ -108,6 +108,14 @@ class UserController {
             res.status(500).json({ error: 'Ошибка при создании пользователя' });
         }
     }
+    async checkAuthUser(req, res) {
+        if (req.session.user) {
+            res.json({ isAuthenticated: true, user: req.session.user });
+          } else {
+            res.json({ isAuthenticated: false });
+          }
+    }
+    
 }
 
 export const userController = new UserController();

@@ -18,9 +18,8 @@ export const Modal: FC<ModalProps> = ({ children, onClick, ...props }) => {
             <Input placeholder={"Password"} img={key} />
             {children}
           </div>
-          {/* Заменяем <a> на <button> */}
           <button
-            onClick={onClick} // Используем переданный обработчик
+            onClick={onClick} 
             className="flex justify-center items-center bg-emerald-400 w-[50%] h-[10%] rounded-3xl cursor-pointer"
           >
             {props.name}

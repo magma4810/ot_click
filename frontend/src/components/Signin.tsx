@@ -5,6 +5,7 @@ import { login } from "../store/auth.slice";
 import { useNavigate } from "react-router-dom";
 
 export const Signin: FC = () => {
+  const API_URL = import.meta.env.VITE_API_URL;
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -12,7 +13,7 @@ export const Signin: FC = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("https://backend-silk-one-80.vercel.app/api/loginUser", {
+      const response = await fetch(`${API_URL}/loginUser`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
