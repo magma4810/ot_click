@@ -7,5 +7,6 @@ userRouter.get('/getVacancies', userController.getVacancies);
 userRouter.get('/getUsers', userController.getUsers);
 userRouter.get('/checkAuthUser', userController.checkAuthUser);
 userRouter.post('/loginUser', userController.loginUser);
-userRouter.post('/registerUser', userController.registerUser);
+userRouter.post('/registerApplicant', userController.registerApplicant);
+userRouter.post('/registerEmployer', userController.registerEmployer);
 userRouter.post('/logoutUser', userController.logoutUser);

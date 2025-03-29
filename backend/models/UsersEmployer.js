@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../database.js'; 
 
-export const Users = sequelize.define('Users', {
+export const UsersEmployer = sequelize.define('UsersEmployer', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -17,23 +17,18 @@ export const Users = sequelize.define('Users', {
   },
   companyNameUser: {
     type: DataTypes.STRING,
-    defaultValue: "",
-    allowNull: true,
-  },
-  role: {
-    type: DataTypes.ENUM('employer', 'applicant'),
     allowNull: false
   },
-  subscribeVacanciesID: {
-    type: DataTypes.ARRAY(DataTypes.INTEGER),
-    defaultValue: null,
-    allowNull: true
+  role: {
+    type: DataTypes.STRING,
+    defaultValue: "employer",
+    allowNull: false
   },
   vacanciesID: {
     type: DataTypes.ARRAY(DataTypes.INTEGER),
-    defaultValue: null,
-    allowNull: true
-  }
+    defaultValue: [],
+    allowNull: false
+  },
 }, {
     timestamps: false 
   });

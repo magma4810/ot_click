@@ -5,17 +5,21 @@ import logo from "../assets/otclick_logo.png";
 import arrow from "../assets/arrow.png";
 import key from "../assets/key.png";
 import user from "../assets/user.png";
+import { useSelector } from "react-redux";
+import { StoreApp } from "../store";
 
 export const Modal: FC<ModalProps> = ({ children, onClick, ...props }) => {
+  const username = useSelector((store: StoreApp) => store.user.username);
+  const password = useSelector((store: StoreApp) => store.user.password);
   return (
     <div className="flex w-[100vw] h-screen items-center justify-center">
       <div className="flex bg-emerald-50 w-[70%] h-[70%] rounded-xl justify-evenly items-center">
         <img src={logo} alt="" className="w-[35%] h-auto" />
         <div className="flex flex-col items-center justify-evenly h-[100%] w-[30%]">
           <span className="text-4xl font-medium">{props.title}</span>
-          <div className="flex w-[100%] h-[40%] flex-col justify-evenly">
-            <Input placeholder={"Username"} img={user} />
-            <Input placeholder={"Password"} img={key} />
+          <div className="flex w-[100%] h-[50%] flex-col justify-evenly">
+            <Input placeholder={"Username"} img={user} value={username}/>
+            <Input placeholder={"Password"} img={key} value={password}/>
             {children}
           </div>
           <button
@@ -50,3 +54,4 @@ export const Modal: FC<ModalProps> = ({ children, onClick, ...props }) => {
     </div>
   );
 };
+

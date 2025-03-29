@@ -4,8 +4,6 @@ import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import { userRouter } from './routes/user.routes.js';
 import { sequelize } from './database.js';
-import { Vacancies } from "./models/Vacancies.js";
-import { Users } from "./models/Users.js";
 import SequelizeStore from 'connect-session-sequelize';
 
 const SequelizeSessionStore = SequelizeStore(session.Store);

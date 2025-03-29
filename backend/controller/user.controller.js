@@ -99,19 +99,34 @@ class UserController {
             });
         }
     }
-    async registerUser(req, res) {
-        const { username, password, companyNameUser, role } = req.body;
+    async registerApplicant(req, res) {
+        const { username, password } = req.body;
         try {
             const [getData, metadata] = await sequelize.query(
-                'INSERT INTO "Users" (username, password, "companyNameUser",role) VALUES (:username, :password,:companyNameUser,:role)',
+                'INSERT INTO "UsersApplicant" (username, password) VALUES (:username, :password)',
                 {
-                    replacements: { username, password, companyNameUser, role }
+                    replacements: { username, password }
                 }
             );
             res.json(getData);
         } catch (error) {
-            console.error('Ошибка при создании пользователя', error);
-            res.status(500).json({ error: 'Ошибка при создании пользователя' });
+            console.error('Ошибка при создании соискателя', error);
+            res.status(500).json({ error: 'Ошибка при создании соискателя' });
+        }
+    }
+    async registerEmployer(req, res) {
+        const { username, password,companyNameUser} = req.body;
+        try {
+            const [getData, metadata] = await sequelize.query(
+                'INSERT INTO "UsersEmployer" (username, password,"companyNameUser") VALUES (:username, :password,:companyNameUser)',
+                {
+                    replacements: { username, password,companyNameUser }
+                }
+            );
+            res.json(getData);
+        } catch (error) {
+            console.error('Ошибка при создании работодателя', error);
+            res.status(500).json({ error: 'Ошибка при создании работодателя' });
         }
     }
     async checkAuthUser(req, res) {

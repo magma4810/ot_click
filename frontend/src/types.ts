@@ -1,7 +1,19 @@
 export type InputProps = {
   placeholder: string;
   img: string;
+  value: string;
 };
+
+export type memberState = {
+  username: string;
+  password: string;
+  repeatPassword: string;
+  companyName: string;
+  role: string;
+  errorPassword: boolean;
+  errorUsername: boolean;
+  errorCompanyName: boolean;
+}
 
 export type ModalProps = {
   name: string;
