@@ -13,6 +13,7 @@ export type memberState = {
   errorPassword: boolean;
   errorUsername: boolean;
   errorCompanyName: boolean;
+  errorPasswordRepeat: boolean;
 }
 
 export type ModalProps = {

@@ -4,17 +4,18 @@ import { Signin } from "./components/Signin";
 import { Signup } from "./components/Signup";
 import { FC, useCallback } from "react";
 import { CompanySignup } from "./components/CompanySignup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { Vacancies } from "./components/Vacancies";
 import { MyVacancies } from "./components/MyVacancies";
 import { changeLoading, changeVacancies } from "./store/vacancies.slice";
 import { ProtectedRoute } from "./components/ProtectedRoute";
+import { StoreApp } from "./store";
 
 export const App: FC = () => {
   const API_URL = import.meta.env.VITE_API_URL;
   const dispatch = useDispatch();
-  
+  const role = useSelector((store:StoreApp) => store.user.role)
   const MAX_RETRIES = 3;
   const RETRY_DELAY = 1000; 
 
@@ -63,7 +64,7 @@ export const App: FC = () => {
         <Route path="company-signup" element={<CompanySignup />} />
         <Route element={<ProtectedRoute />}>
           <Route path="vacancies" element={<Vacancies />}/>
-          <Route path="my-vacancies" element={<MyVacancies />}/>
+          {role === 'applicant' && <Route path="my-vacancies" element={<MyVacancies />}/>}
         </Route>
       </Routes>
     </HashRouter>

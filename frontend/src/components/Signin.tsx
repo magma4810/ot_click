@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "../store/auth.slice";
 import { useNavigate } from "react-router-dom";
 import { StoreApp } from "../store";
-import { changeCompanyName, changeErrorCompanyName, changeErrorPassword,changeErrorUsername, changePassword, changeRepeatPassword, changeUsername } from "../store/user.slice";
+import {changeErrorPassword,changeErrorUsername,resetUserForm } from "../store/user.slice";
 
 export const Signin: FC = () => {
   const API_URL = import.meta.env.VITE_API_URL;
@@ -15,13 +15,7 @@ export const Signin: FC = () => {
   const userRole = useSelector((store: StoreApp) => store.user.role);
   useEffect(() => {
     return () => {
-      dispatch(changeRepeatPassword(""));
-      dispatch(changeCompanyName(""));
-      dispatch(changeErrorCompanyName(false));
-      dispatch(changePassword(""));
-      dispatch(changeUsername(""));
-      dispatch(changeErrorUsername(false));
-      dispatch(changeErrorPassword(false));
+      dispatch(resetUserForm());
     };
   }, [dispatch]);
   const handleSubmit = async (e: React.MouseEvent) => {
