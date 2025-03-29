@@ -19,6 +19,7 @@ export const Signup: FC<SignupProps> = ({ children }) => {
   const companyName = useSelector((store: StoreApp) => store.user.companyName);
   const role = useSelector((store: StoreApp) => store.user.role);
   useEffect(() => {
+    dispatch(changeRole('applicant'));
     return () => {
       dispatch(resetUserForm());
     };
@@ -35,9 +36,9 @@ export const Signup: FC<SignupProps> = ({ children }) => {
     }else if(role === "employer" && companyName === ""){
       dispatch(changeErrorCompanyName(true));
     }else{
-
       try {
         let response;
+        
         if(role === "employer"){
           response = await fetch(`${API_URL}/registerEmployer`, {
             method: "POST",
@@ -53,7 +54,7 @@ export const Signup: FC<SignupProps> = ({ children }) => {
             }),
           });
         }else{
-
+          
           response = await fetch(`${API_URL}/registerApplicant`, {
             method: "POST",
             headers: {

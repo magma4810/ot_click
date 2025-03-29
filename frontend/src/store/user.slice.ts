@@ -10,7 +10,9 @@ const initialState: memberState = {
     errorPassword: false,
     errorUsername: false,
     errorCompanyName: false,
-    errorPasswordRepeat: false
+    errorPasswordRepeat: false,
+    errorUserNotFound: false,
+    errorUserPassword: false
 };
 
 export const userSlice = createSlice({
@@ -44,6 +46,12 @@ export const userSlice = createSlice({
         changeErrorCompanyName: (state, action: PayloadAction<boolean>) => {
             state.errorCompanyName = action.payload;
         },
+        changeErrorUserNotFound: (state, action: PayloadAction<boolean>) => {
+            state.errorUserNotFound = action.payload;
+        },
+        changeErrorUserPassword: (state, action: PayloadAction<boolean>) => {
+            state.errorUserPassword = action.payload;
+        },
         resetUserForm: (state) => {
             state.username = '';
             state.password = '';
@@ -53,15 +61,19 @@ export const userSlice = createSlice({
             state.errorPassword = false;
             state.errorPasswordRepeat = false;
             state.errorCompanyName = false;
+            state.errorUserNotFound = false;
+            state.errorUserPassword = false;
           },
           resetErrors: (state) => {
             state.errorUsername = false;
             state.errorPassword = false;
             state.errorPasswordRepeat = false;
             state.errorCompanyName = false;
+            state.errorUserNotFound = false;
+            state.errorUserPassword = false;
           }
     },
 });
 
 export const userReducer = userSlice.reducer;
-export const { changeUsername, changePassword,changeRepeatPassword,changeCompanyName,changeRole,changeErrorPassword,changeErrorUsername,changeErrorCompanyName,changeErrorPasswordRepeat,resetUserForm,resetErrors } = userSlice.actions;
+export const { changeUsername,changeErrorUserNotFound,changeErrorUserPassword, changePassword,changeRepeatPassword,changeCompanyName,changeRole,changeErrorPassword,changeErrorUsername,changeErrorCompanyName,changeErrorPasswordRepeat,resetUserForm,resetErrors } = userSlice.actions;

@@ -14,6 +14,8 @@ export type memberState = {
   errorUsername: boolean;
   errorCompanyName: boolean;
   errorPasswordRepeat: boolean;
+  errorUserNotFound: boolean;
+  errorUserPassword: boolean;
 }
 
 export type ModalProps = {

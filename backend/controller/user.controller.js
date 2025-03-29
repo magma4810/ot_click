@@ -15,18 +15,26 @@ class UserController {
             res.status(500).json({ error: 'Ошибка при получении вакансий' });
         }
     }
-    async getUsers(req, res) {
+    async getUserInfoByName(req, res) {
+        const { username } = req.params;
         try {
-            const [getData, metadata] = await sequelize.query(
-                `select * from "Users"`,
+            const [getData] = await sequelize.query(
+                `SELECT password, role FROM "UsersApplicant" WHERE username = :username
+                 UNION ALL
+                 SELECT password, role FROM "UsersEmployer" WHERE username = :username`,
                 {
-                    replacements: {}
+                    replacements: { username }
                 }
             );
-            res.json(getData);
+            
+            if (getData.length === 0) {
+                return res.status(404).json({ error: 'Пользователь не найден' });
+            }
+            
+            res.json(getData[0]); // Возвращаем первого найденного пользователя
         } catch (error) {
-            console.error('Ошибка при получении пользователей', error);
-            res.status(500).json({ error: 'Ошибка при получении пользователей' });
+            console.error('Ошибка при получении информации пользователя', error);
+            res.status(500).json({ error: 'Ошибка при получении информации пользователя' });
         }
     }
     async loginUser(req, res) {
@@ -41,7 +49,7 @@ class UserController {
                 username: req.username,
                 role: req.role
             };
-            req.session.save((err) => { // Явное сохранение
+            req.session.save((err) => { 
                 if (err) {
                     return res.status(500).json({ success: false, message: 'Ошибка при сохранении сессии' });
                 }

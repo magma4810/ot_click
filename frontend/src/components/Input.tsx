@@ -1,16 +1,39 @@
-import { InputProps } from "../types";
 import { FC } from "react";
-import { changeRepeatPassword, changePassword, changeUsername, changeCompanyName,  resetErrors } from "../store/user.slice";
 import { useDispatch, useSelector } from "react-redux";
 import { StoreApp } from "../store";
+import { 
+  changeRepeatPassword, 
+  changePassword, 
+  changeUsername,
+  changeCompanyName,
+  resetErrors 
+} from "../store/user.slice";
+import { InputProps } from "../types";
+import { createSelector } from "@reduxjs/toolkit";
+
+const selectErrors = createSelector(
+  (state: StoreApp) => state.user,
+  (user) => ({
+    password: user.errorPassword,
+    repeatPassword: user.errorPasswordRepeat,
+    username: user.errorUsername,
+    companyName: user.errorCompanyName,
+    userNotFound: user.errorUserNotFound,
+    errorUserPassword: user.errorUserPassword
+  })
+);
 
 export const Input: FC<InputProps> = ({ placeholder, img, value }) => {
   const dispatch = useDispatch();
-  const errorPassword = useSelector((store: StoreApp) => store.user.errorPassword);
-  const errorPasswordRepeat = useSelector((store: StoreApp) => store.user.errorPasswordRepeat);
-  const errorUsername = useSelector((store: StoreApp) => store.user.errorUsername);
-  const errorCompanyName = useSelector((store: StoreApp) => store.user.errorCompanyName);
-  const passwordCheck = placeholder === "Password" || placeholder === "Repeat Password";
+  
+  const errors = useSelector(selectErrors);
+  const errorMessages = {
+    'Password': errors.errorUserPassword ? 'Неверный пароль':'Пароль не должен быть пустым',
+    'Repeat Password': 'Пароли должны совпадать',
+    'Username': errors.userNotFound ? 'Пользователь не найден' : 'Поле Username не должно быть пустым',
+    'Company Name': 'Название компании обязательно'
+  };
+
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(resetErrors());
     switch (placeholder) {
@@ -27,37 +50,35 @@ export const Input: FC<InputProps> = ({ placeholder, img, value }) => {
         dispatch(changeCompanyName(e.target.value));
         break;
     }
-  }
+  };
+
+  const hasError = (() => {
+    switch (placeholder) {
+      case 'Password': return errors.password || errors.errorUserPassword;
+      case 'Repeat Password': return errors.repeatPassword;
+      case 'Username': return errors.username || errors.userNotFound;
+      case 'Company Name': return errors.companyName;
+      default: return false;
+    }
+  })();
+
   return (
-    <div className=" flex flex-col relative mb-8">
-      <div className={` bg-amber-50 h-12 flex items-center rounded border border-gray-300 p-2 ${(errorPassword && passwordCheck || errorUsername && placeholder==="Username" || errorCompanyName && placeholder==="Company Name" || passwordCheck && errorPasswordRepeat) && "border-red-500 border-3"}`}>
-        <img src={img} alt="" className="w-6 h-6 mr-2" />
+    <div className="flex flex-col relative mb-8">
+      <div className={`bg-amber-50 h-12 flex items-center rounded border border-gray-300 p-2 ${
+        hasError ? "border-red-500 border-2" : ""
+      }`}>
+        <img src={img} alt={placeholder} className="w-6 h-6 mr-2" />
         <input
-          type="text"
           placeholder={placeholder}
           className="flex-1 outline-none bg-transparent"
           onChange={onChange}
           value={value}
         />
       </div>
-      {errorPassword && placeholder === "Password" && (
-        <span className="text-xs text-red-500 absolute -bottom-5 flex justify-center w-full">
-          Пароль не должен быть пустым
-        </span>
-      )}
-      {errorPasswordRepeat && placeholder === "Repeat Password" && (
-        <span className="text-xs text-red-500 absolute -bottom-5 flex justify-center w-full">
-          Пароли должны совпадать
-        </span>
-      )}
-      {errorUsername && placeholder === "Username" && (
-        <span className="text-xs text-red-500 absolute -bottom-5 flex justify-center w-full">
-          Поле Username не должно быть пустым
-        </span>
-      )}
-      {errorCompanyName && placeholder === "Company Name" && (
-        <span className="text-xs text-red-500 absolute -bottom-5 flex justify-center w-full">
-          Поле Company Name не должно быть пустым
+      
+      {hasError && (
+        <span className="text-xs text-red-500 absolute -bottom-5 left-0">
+          {errorMessages[placeholder as keyof typeof errorMessages]}
         </span>
       )}
     </div>
