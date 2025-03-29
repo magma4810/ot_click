@@ -35,10 +35,18 @@ const corsOptions = {
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  allowedHeaders: [
+    'Content-Type', 
+    'Authorization',
+    'Cache-Control', // Добавляем поддержку Cache-Control
+    'X-Requested-With'
+  ],
   preflightContinue: false,
-  optionsSuccessStatus: 204
+  optionsSuccessStatus: 204,
+  exposedHeaders: ['set-cookie'] // Важно для работы с куками
 };
+
+app.use(cors(corsOptions));
 
 // Явная обработка OPTIONS запросов
 app.options('*', cors(corsOptions));
@@ -57,11 +65,13 @@ app.use(
     store: sessionStore,
     resave: false,
     saveUninitialized: false,
+    proxy: true, 
     cookie: { 
       secure: process.env.NODE_ENV === 'production',
       sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
       httpOnly: true,
-      maxAge: 24 * 60 * 60 * 1000 // 1 день
+      maxAge: 24 * 60 * 60 * 1000,
+      domain: process.env.NODE_ENV === 'production' ? 'otclickbackend-vannesals-projects.vercel.app' : 'localhost'
     }
   })
 );

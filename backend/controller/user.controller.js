@@ -30,6 +30,7 @@ class UserController {
         }
     }
     async loginUser(req, res) {
+        
         res.cookie('authenticated', "true", { maxAge: 86400000, httpOnly: false });
         req.session.regenerate((err) => {
             if (err) {
@@ -40,10 +41,15 @@ class UserController {
                 username: req.username,
                 role: req.role
             };
-            res.json({
-                success: true,
-                message: 'Успешно!',
-                user: req.session.user,
+            req.session.save((err) => { // Явное сохранение
+                if (err) {
+                    return res.status(500).json({ success: false, message: 'Ошибка при сохранении сессии' });
+                }
+                res.json({
+                    success: true,
+                    message: 'Успешно!',
+                    user: req.session.user,
+                });
             });
         });
     }

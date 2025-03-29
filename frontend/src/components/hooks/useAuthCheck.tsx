@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { login,logout } from "../../store/auth.slice";
 
 
-export const useAuthCheck = () => {
+export const useAuthCheck = (): boolean => {
     const dispatch = useDispatch();
     const [isAuthChecked, setIsAuthChecked] = useState(false);
     const API_URL = import.meta.env.VITE_API_URL;
@@ -14,7 +14,7 @@ export const useAuthCheck = () => {
           const response = await fetch(`${API_URL}/checkAuthUser`, {
             credentials: 'include',
             headers: {
-              'Cache-Control': 'no-cache'
+              'Content-Type': 'application/json',
             }
           });
           
