@@ -1,10 +1,11 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { Modal } from "./Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../store/auth.slice";
 import { useNavigate } from "react-router-dom";
 import { StoreApp } from "../store";
-import {changeErrorPassword,changeErrorUsername,changeErrorUserNotFound,changeErrorUserPassword,changeRole,resetUserForm } from "../store/user.slice";
+import {changeRole } from "../store/user.slice";
+import { changeErrorPassword, changeErrorUsername, changeErrorUserNotFound,changeErrorUserPassword } from "../store/errors.slice";
 
 export const Signin: FC = () => {
   const API_URL = import.meta.env.VITE_API_URL;
@@ -12,12 +13,6 @@ export const Signin: FC = () => {
   const navigate = useNavigate();
   const username = useSelector((store: StoreApp) => store.user.username);
   const password = useSelector((store: StoreApp) => store.user.password);
-
-  useEffect(() => {
-    return () => {
-      dispatch(resetUserForm());
-    };
-  }, [dispatch]);
 
   const handleSubmit = async (e: React.MouseEvent) => {
 
@@ -61,6 +56,7 @@ export const Signin: FC = () => {
 
         const data = await loginUser.json();
         dispatch(login(data.user));
+        sessionStorage.setItem('role', dataUser.role);
         dispatch(changeRole(dataUser.role))
         navigate("/vacancies");
       } catch (error) {

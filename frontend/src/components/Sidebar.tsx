@@ -6,6 +6,7 @@ import { logout } from "../store/auth.slice";
 import { IconSidebarProps } from "../types";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { resetUserForm } from "../store/user.slice";
 
 export const Sidebar: FC = () => {
   return (
@@ -36,6 +37,7 @@ export const Sidebar: FC = () => {
 };
 
 const IconSidebar: FC<IconSidebarProps> = ({ ...props }) => {
+
   const navigate = useNavigate();
   const isActive = (path: string) => {
     return location.hash === path;
@@ -65,6 +67,8 @@ const IconSidebar: FC<IconSidebarProps> = ({ ...props }) => {
 
   const handleClick = (e: React.MouseEvent) => {
     if (props.title === "Logout") {
+      sessionStorage.removeItem('role');
+      dispatch(resetUserForm());
       handleLogout(e);
     }
   };

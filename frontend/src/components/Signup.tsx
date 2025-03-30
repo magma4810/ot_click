@@ -7,7 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login } from "../store/auth.slice";
 import { StoreApp } from "../store";
-import { changeErrorCompanyName, changeErrorPassword,changeErrorPasswordRepeat,changeErrorUsername,changeRole,resetUserForm } from "../store/user.slice";
+import { changeRole,resetUserForm } from "../store/user.slice";
+import { changeErrorCompanyName, changeErrorPassword,changeErrorPasswordRepeat,changeErrorUsername, resetErrors } from "../store/errors.slice";
 
 export const Signup: FC<SignupProps> = ({ children }) => {
   const API_URL = import.meta.env.VITE_API_URL;
@@ -22,6 +23,7 @@ export const Signup: FC<SignupProps> = ({ children }) => {
     dispatch(changeRole('applicant'));
     return () => {
       dispatch(resetUserForm());
+      dispatch(resetErrors())
     };
   }, [dispatch]);
   const handleSubmit = async (e: React.MouseEvent) => {
@@ -76,6 +78,7 @@ export const Signup: FC<SignupProps> = ({ children }) => {
   
         const data = await response.json();
         dispatch(login(data.user));
+
         navigate("/signin");
       } catch (error) {
         console.error("Login error:", error);

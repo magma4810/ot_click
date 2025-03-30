@@ -1,13 +1,16 @@
-import { FC } from "react";
+import { Dispatch, FC, SetStateAction } from "react";
 import { Vacancies } from "../types";
 import { motion } from "framer-motion";
 
-export const ModalVacancy: FC<{ data: Vacancies; onClose: () => void }> = ({
+export const ModalVacancy: FC<{ data: Vacancies; onClose: () => void ;onClick: Dispatch<SetStateAction<boolean>>}> = ({
   data,
   onClose,
+  onClick
 }) => {
+
   return (
-    <div className="fixed inset-0 flex items-center justify-center cursor-auto">
+
+    <div className="fixed inset-0 flex items-center justify-center cursor-auto z-10">
       <div className="absolute inset-0 bg-black/50 backdrop-blur-xs"></div>
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
@@ -32,7 +35,11 @@ export const ModalVacancy: FC<{ data: Vacancies; onClose: () => void }> = ({
             <Paragraph key={key} title={key} data={value} />
           ))}
         </div>
-        <button className=" flex justify-center items-center w-full ">
+        <button className=" flex justify-center items-center w-full " onClick={(e) => {
+            e.stopPropagation();
+            onClick(true)
+            onClose();
+          }}>
           <span className="bg-emerald-400/80 text-2xl w-[15vw] h-[7vh] rounded-[100px] cursor-pointer flex items-center justify-center">
             Ot`click
           </span>

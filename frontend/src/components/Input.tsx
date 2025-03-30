@@ -5,21 +5,21 @@ import {
   changeRepeatPassword, 
   changePassword, 
   changeUsername,
-  changeCompanyName,
-  resetErrors 
+  changeCompanyName
 } from "../store/user.slice";
 import { InputProps } from "../types";
 import { createSelector } from "@reduxjs/toolkit";
+import { resetErrors } from "../store/errors.slice";
 
 const selectErrors = createSelector(
-  (state: StoreApp) => state.user,
-  (user) => ({
-    password: user.errorPassword,
-    repeatPassword: user.errorPasswordRepeat,
-    username: user.errorUsername,
-    companyName: user.errorCompanyName,
-    userNotFound: user.errorUserNotFound,
-    errorUserPassword: user.errorUserPassword
+  (state: StoreApp) => state.errors,
+  (errors) => ({
+    password: errors.errorPassword,
+    repeatPassword: errors.errorPasswordRepeat,
+    username: errors.errorUsername,
+    companyName: errors.errorCompanyName,
+    userNotFound: errors.errorUserNotFound,
+    errorUserPassword: errors.errorUserPassword
   })
 );
 
