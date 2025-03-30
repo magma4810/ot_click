@@ -1,21 +1,26 @@
 {
   "index.html": {
-    "file": "assets/index-C45C4vJQ.js",
+    "file": "assets/index-C9u90ENJ.js",
     "name": "index",
     "src": "index.html",
     "isEntry": true,
     "css": [
-      "assets/index-CF183k0A.css"
+      "assets/index-Cp1oIl_U.css"
     ],
     "assets": [
       "assets/otclick_logo-CTNnzU82.png",
       "assets/key-Bx8bQ6rd.png",
       "assets/user-8tTi5gjM.png",
       "assets/company-DxOxDRtx.png",
+      "assets/checked-CW67wavV.png",
       "assets/vacancies-Bsk_vY7b.png",
       "assets/my_vacancies-BAM_Gi_Z.png",
       "assets/logout-odkD6gs5.png"
     ]
+  },
+  "src/assets/checked.png": {
+    "file": "assets/checked-CW67wavV.png",
+    "src": "src/assets/checked.png"
   },
   "src/assets/company.png": {
     "file": "assets/company-DxOxDRtx.png",
