@@ -1,16 +1,13 @@
 import { Dispatch, FC, SetStateAction } from "react";
 import { Vacancies } from "../types";
 import { motion } from "framer-motion";
-import { useSelector } from "react-redux";
-import { StoreApp } from "../store";
 
-export const ModalVacancy: FC<{ data: Vacancies; onClose: () => void ;onClick: Dispatch<SetStateAction<boolean>>}> = ({
+export const ModalVacancy: FC<{ title: string, data: Vacancies; onClose: () => void ;onClick: Dispatch<SetStateAction<boolean>>}> = ({
+  title,
   data,
   onClose,
   onClick
 }) => {
-  const data1 = useSelector((store: StoreApp) => store.user.subscribeVacanciesID);
-  console.log(data1)
   return (
 
     <div className="fixed inset-0 flex items-center justify-center cursor-auto z-10">
@@ -44,7 +41,7 @@ export const ModalVacancy: FC<{ data: Vacancies; onClose: () => void ;onClick: D
             onClose();
           }}>
           <span className="bg-emerald-400/80 text-2xl w-[15vw] h-[7vh] rounded-[100px] cursor-pointer flex items-center justify-center">
-            Ot`click
+            {title}
           </span>
         </button>
       </motion.div>

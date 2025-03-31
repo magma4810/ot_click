@@ -4,20 +4,32 @@ import { ModalVacancy } from "./ModalVacancy";
 import { AnimatePresence } from "framer-motion";
 import checked from "../assets/checked.png";
 import { useSelector } from "react-redux";
-import { addSubscribeVacanciesID, updateSubscriptionsID } from "../store/user.slice";
+import { addSubscribeVacanciesID, deleteSubscribeVacanciesID, updateSubscriptionsID } from "../store/user.slice";
 import { StoreApp, useAppDispatch } from "../store";
+import { fetchChangeResponded } from "../store/vacancies.slice";
 
 export const VacancyCard: FC<VacancyCardProps> = ({ ...props }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isResponeded, setIsResponeded] = useState(false);
   const description = props.data.description;
   const dispatch = useAppDispatch();
   const subscribeVacanciesID = useSelector((store: StoreApp) => store.user.subscribeVacanciesID);
   const username = useSelector((store: StoreApp) => store.user.username);
-  const onClick = () => {
-    setIsResponeded(true);
-    dispatch(updateSubscriptionsID({ username, vacancyId: props.data.id }));
+  const check = ((props.title === "Cancel") || (!subscribeVacanciesID.includes(props.data.id)));
+  const onClickSubscribeVacancie = () => {
     dispatch(addSubscribeVacanciesID(props.data.id));
+    dispatch(updateSubscriptionsID({ username }));
+    dispatch(fetchChangeResponded({ 
+      id: props.data.id, 
+      subscribe: props.data.subscribe+1
+    }));
+  };
+  const onClickCancelVacancie = () => {
+    dispatch(deleteSubscribeVacanciesID(props.data.id));
+    dispatch(updateSubscriptionsID({ username }));
+    dispatch(fetchChangeResponded({ 
+      id: props.data.id, 
+      subscribe: props.data.subscribe-1
+    }));
   };
   useEffect(() => {
     if (isModalOpen) {
@@ -30,12 +42,13 @@ export const VacancyCard: FC<VacancyCardProps> = ({ ...props }) => {
       document.body.style.overflow = "auto";
     };
   }, [isModalOpen]);
+
   return (
     <div
-      className={`relative bg-cyan-800/50 w-[20vw] h-[20vh] flex flex-col items-center justify-evenly p-3.5 m-1.5 rounded-[3px] ${!isResponeded && !subscribeVacanciesID.includes(props.data.id) && "cursor-pointer"} `}
-      onClick={() => !isResponeded && !subscribeVacanciesID.includes(props.data.id) && setIsModalOpen(true)}
+      className={`relative bg-cyan-800/50 w-[20vw] h-[20vh] flex flex-col items-center justify-evenly p-3.5 m-1.5 rounded-[3px] ${check && "cursor-pointer"} `}
+      onClick={() => check && setIsModalOpen(true)}
     >
-      {(isResponeded || subscribeVacanciesID.includes(props.data.id)) && (
+      {(subscribeVacanciesID.includes(props.data.id)) && (
         <div className="absolute flex top-1 justify-end items-center p-1">
 
           <span className=" w-[30%] h-[20%] text-xs text-emerald-400 rounded flex ">
@@ -57,7 +70,8 @@ export const VacancyCard: FC<VacancyCardProps> = ({ ...props }) => {
           <ModalVacancy
             data={props.data}
             onClose={() => setIsModalOpen(false)}
-            onClick={onClick}
+            onClick={props.title === "Cancel" ? onClickCancelVacancie : onClickSubscribeVacancie}
+            title={props.title}
           />
         </AnimatePresence>
       )}

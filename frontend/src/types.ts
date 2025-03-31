@@ -66,6 +66,7 @@ export type VacanciesState = {
 
 export type VacancyCardProps = {
   data: Vacancies;
+  title: string;
 };
 
 

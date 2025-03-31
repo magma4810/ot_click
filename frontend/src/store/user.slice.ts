@@ -13,7 +13,7 @@ const initialState: userState = {
 const API_URL = import.meta.env.VITE_API_URL;
 
 export const getInfoApplicant = createAsyncThunk(
-    'user/fetchApplicantData',
+    'user/getInfoApplicant',
     async (username: string, { dispatch }) => {
       const response = await fetch(`${API_URL}/getInfoApplicant/${username}`, {
         method: "GET",
@@ -35,15 +35,15 @@ export const getInfoApplicant = createAsyncThunk(
   );
 
 export const updateSubscriptionsID = createAsyncThunk(
-    'user/fetchUpdateSubscriptionsID',
-    async ({ username, vacancyId }: { username: string; vacancyId: number }, { getState }) => {
+    'user/updateSubscribeVacanciesID',
+    async ({ username }: { username: string }, { getState }) => {
       const { user } = getState() as { user: userState };
       const response = await fetch(`${API_URL}/updateSubscribeVacanciesID/${username}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
         body: JSON.stringify({
-          subscribeVacanciesID: [...user.subscribeVacanciesID, vacancyId]
+          subscribeVacanciesID: user.subscribeVacanciesID
         }),
       });
       return response.json();
@@ -78,6 +78,9 @@ export const userSlice = createSlice({
           addSubscribeVacanciesID: (state, action: PayloadAction<number>) => {
             state.subscribeVacanciesID = [...state.subscribeVacanciesID, action.payload];
         },
+        deleteSubscribeVacanciesID: (state, action: PayloadAction<number>) => {
+            state.subscribeVacanciesID = state.subscribeVacanciesID.filter((id) => id !== action.payload);
+        },
         changeSubscribeVacanciesID: (state, action: PayloadAction<number[]>) => {
             state.subscribeVacanciesID = action.payload;
         },
@@ -87,4 +90,4 @@ export const userSlice = createSlice({
 
 export const userReducer = userSlice.reducer;
 
-export const { changeUsername,addSubscribeVacanciesID,changeSubscribeVacanciesID, changePassword,changeRepeatPassword,changeCompanyName,changeRole,resetUserForm } = userSlice.actions;
+export const { changeUsername,deleteSubscribeVacanciesID,addSubscribeVacanciesID,changeSubscribeVacanciesID, changePassword,changeRepeatPassword,changeCompanyName,changeRole,resetUserForm } = userSlice.actions;

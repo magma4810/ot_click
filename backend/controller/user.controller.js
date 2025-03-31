@@ -159,16 +159,47 @@ class UserController {
             res.status(500).json({ error: 'Ошибка при получении данных соискателя' });
         }
     }
+    async getSubscribe(req, res) {
+        const { id } = req.params;
+        try {
+            const [getData, metadata] = await sequelize.query(
+                'SELECT subscribe FROM "Vacancies" WHERE id = :id',
+                {
+                    replacements: { id }
+                }
+            );
+            res.json(getData);
+        } catch (error) {
+            console.error('Ошибка при получении данных кол ва отликнувшихся', error);
+            res.status(500).json({ error: 'Ошибка при получении данных кол ва отликнувшихся' });
+        }
+    }
+    async updateSubscribe(req, res) {
+        const { id } = req.params;
+        const { subscribe } = req.body;
+        try {
+            const [getData, metadata] = await sequelize.query(
+                `UPDATE "Vacancies" 
+         SET "subscribe" = :subscribe
+         WHERE id = :id`,
+                {
+                    replacements: { id,subscribe }
+                }
+            );
+            res.json(getData);
+        } catch (error) {
+            console.error('Ошибка при обновлении данных кол ва отликнувшихся', error);
+            res.status(500).json({ error: 'Ошибка при обновлении данных кол ва отликнувшихся' });
+        }
+    }
     async updateSubscribeVacanciesID(req, res) {
-        // userController.js
         try {
             const { username } = req.params;
             const { subscribeVacanciesID } = req.body;
 
-            // Для applicant
             await sequelize.query(
                 `UPDATE "UsersApplicant" 
-         SET "subscribeVacanciesID" = ARRAY[:subscriptions]
+         SET "subscribeVacanciesID" = ARRAY[:subscriptions]::integer[]
          WHERE username = :username`,
                 {
                     replacements: {

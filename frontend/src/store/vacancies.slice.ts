@@ -6,9 +6,9 @@ const initialState: VacanciesState = {
   loading: true,
 };
 const API_URL = import.meta.env.VITE_API_URL;
-export const getVacancies = createAsyncThunk(
-  'user/fetchApplicantData',
-  async (_,{ dispatch }) => {
+export const fetchGetVacancies = createAsyncThunk(
+  'user/fetchGetVacancies',
+  async (_, { dispatch }) => {
     const response = await fetch(`${API_URL}/getVacancies`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
@@ -23,7 +23,28 @@ export const getVacancies = createAsyncThunk(
 
     dispatch(changeVacancies(data));
     dispatch(changeLoading(false));
-    return data; 
+    return data;
+  }
+);
+export const fetchChangeResponded = createAsyncThunk(
+  'user/fetchChangeResponded',
+  async (payload: { id: number; subscribe: number },{dispatch}) => {
+    const response = await fetch(`${API_URL}/updateSubscribe/${payload.id}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({
+        subscribe: payload.subscribe
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Не удалось обновить откликнувшихся');
+    }
+    dispatch(changeResponded({
+      id: payload.id,
+      count: payload.subscribe
+    }))
   }
 );
 
@@ -37,8 +58,14 @@ export const vacanciesSlice = createSlice({
     changeLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
     },
+    changeResponded: (state, action: PayloadAction<{ id: number, count: number }>) => {
+      const vacancy = state.vacancies.find(v => v.id === action.payload.id);
+      if (vacancy) {
+        vacancy.subscribe = action.payload.count;
+      }
+    }
   },
 });
 
 export const vacanciesReducer = vacanciesSlice.reducer;
-export const { changeVacancies, changeLoading } = vacanciesSlice.actions;
+export const { changeVacancies, changeResponded, changeLoading } = vacanciesSlice.actions;

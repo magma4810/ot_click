@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { Vacancies } from "./components/Vacancies";
 import { MyVacancies } from "./components/MyVacancies";
-import { getVacancies } from "./store/vacancies.slice";
+import { fetchGetVacancies } from "./store/vacancies.slice";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { StoreApp, useAppDispatch } from "./store";
 import { getInfoApplicant } from "./store/user.slice";
@@ -21,8 +21,8 @@ export const App: FC = () => {
 
   useEffect(() => {
     dispatch(getInfoApplicant(username));
-    dispatch(getVacancies());
-  },[dispatch,username])
+    dispatch(fetchGetVacancies());
+  },[])
 
 
   return (
