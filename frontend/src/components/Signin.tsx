@@ -1,15 +1,15 @@
 import { FC } from "react";
 import { Modal } from "./Modal";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { login } from "../store/auth.slice";
 import { useNavigate } from "react-router-dom";
-import { StoreApp } from "../store";
-import {changeRole } from "../store/user.slice";
+import { StoreApp, useAppDispatch } from "../store";
+import {changeRole, getInfoApplicant } from "../store/user.slice";
 import { changeErrorPassword, changeErrorUsername, changeErrorUserNotFound,changeErrorUserPassword } from "../store/errors.slice";
 
 export const Signin: FC = () => {
   const API_URL = import.meta.env.VITE_API_URL;
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const username = useSelector((store: StoreApp) => store.user.username);
   const password = useSelector((store: StoreApp) => store.user.password);
@@ -57,7 +57,11 @@ export const Signin: FC = () => {
         const data = await loginUser.json();
         dispatch(login(data.user));
         sessionStorage.setItem('role', dataUser.role);
-        dispatch(changeRole(dataUser.role))
+        sessionStorage.setItem('username', username);
+        dispatch(changeRole(dataUser.role));
+        if(dataUser.role === "applicant"){
+          dispatch(getInfoApplicant(username));
+        }
         navigate("/vacancies");
       } catch (error) {
         console.error("Login error:", error);

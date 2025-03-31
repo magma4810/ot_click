@@ -1,14 +1,55 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { userState } from "../types";
+import { changeLoading } from "./vacancies.slice";
 
 const initialState: userState = {
-    username: "",
+    username: sessionStorage.getItem('username') || "",
     password: "",
     repeatPassword: "",
     companyName: "",
+    subscribeVacanciesID: [],
     role: sessionStorage.getItem('role') || ""
 };
+const API_URL = import.meta.env.VITE_API_URL;
 
+export const getInfoApplicant = createAsyncThunk(
+    'user/fetchApplicantData',
+    async (username: string, { dispatch }) => {
+      const response = await fetch(`${API_URL}/getInfoApplicant/${username}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include"
+      });
+  
+      if (!response.ok) {
+        throw new Error('Не удалось загрузить данные соискателя');
+      }
+  
+      const data = await response.json();
+      const applicantData = data[0];
+
+      dispatch(changeSubscribeVacanciesID(applicantData.subscribeVacanciesID));
+      dispatch(changeLoading(false));
+      return applicantData; 
+    }
+  );
+
+export const updateSubscriptionsID = createAsyncThunk(
+    'user/fetchUpdateSubscriptionsID',
+    async ({ username, vacancyId }: { username: string; vacancyId: number }, { getState }) => {
+      const { user } = getState() as { user: userState };
+      const response = await fetch(`${API_URL}/updateSubscribeVacanciesID/${username}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          subscribeVacanciesID: [...user.subscribeVacanciesID, vacancyId]
+        }),
+      });
+      return response.json();
+    }
+  );
+  
 export const userSlice = createSlice({
     name: "user",
     initialState,
@@ -34,8 +75,16 @@ export const userSlice = createSlice({
             state.repeatPassword = '';
             state.companyName = '';
           },
+          addSubscribeVacanciesID: (state, action: PayloadAction<number>) => {
+            state.subscribeVacanciesID = [...state.subscribeVacanciesID, action.payload];
+        },
+        changeSubscribeVacanciesID: (state, action: PayloadAction<number[]>) => {
+            state.subscribeVacanciesID = action.payload;
+        },
     },
+    
 });
 
 export const userReducer = userSlice.reducer;
-export const { changeUsername, changePassword,changeRepeatPassword,changeCompanyName,changeRole,resetUserForm } = userSlice.actions;
+
+export const { changeUsername,addSubscribeVacanciesID,changeSubscribeVacanciesID, changePassword,changeRepeatPassword,changeCompanyName,changeRole,resetUserForm } = userSlice.actions;

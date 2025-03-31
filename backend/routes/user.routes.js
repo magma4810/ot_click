@@ -5,6 +5,8 @@ export const userRouter = new Router();
 
 userRouter.get('/getVacancies', userController.getVacancies);
 userRouter.get('/getUserInfo/:username', userController.getUserInfoByName);
+userRouter.get('/getInfoApplicant/:username', userController.getInfoApplicant);
+userRouter.post('/updateSubscribeVacanciesID/:username', userController.updateSubscribeVacanciesID);
 userRouter.get('/checkAuthUser', userController.checkAuthUser);
 userRouter.post('/loginUser', userController.loginUser);
 userRouter.post('/registerApplicant', userController.registerApplicant);

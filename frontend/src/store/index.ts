@@ -3,6 +3,7 @@ import { vacanciesReducer } from "./vacancies.slice";
 import { authReducer } from "./auth.slice";
 import { userReducer } from "./user.slice";
 import { errorsReducer } from "./errors.slice";
+import { useDispatch } from "react-redux";
 
 const rootReducer = combineReducers({
   vacancies: vacanciesReducer,
@@ -16,3 +17,5 @@ export const store = configureStore({
 });
 
 export type StoreApp = ReturnType<typeof rootReducer>;
+export type AppDispatch = typeof store.dispatch;
+export const useAppDispatch = () => useDispatch<AppDispatch>();

@@ -10,8 +10,8 @@ const SequelizeSessionStore = SequelizeStore(session.Store);
 const sessionStore = new SequelizeSessionStore({
   db: sequelize,
   tableName: 'Sessions',
-  checkExpirationInterval: 15 * 60 * 1000, // Очистка просроченных сессий каждые 15 минут
-  expiration: 24 * 60 * 60 * 1000 // Время жизни сессии 24 часа
+  checkExpirationInterval: 6 * 60 * 60 * 1000, // Очистка просроченных сессий каждые 6 часов
+  expiration: 12 * 60 * 60 * 1000 // Время жизни сессии 12 часов
 });
 
 const PORT = process.env.PORT || 3000;

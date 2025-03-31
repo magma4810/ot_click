@@ -7,7 +7,7 @@ import { Sidebar } from "./Sidebar";
 export const Vacancies: FC = () => {
   const vacancies = useSelector((store: StoreApp) => store.vacancies.vacancies);
   const loading = useSelector((store: StoreApp) => store.vacancies.loading);
-
+  
   return (
     <div className="flex min-h-0">
       <Sidebar />

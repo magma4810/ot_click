@@ -1,13 +1,16 @@
 import { Dispatch, FC, SetStateAction } from "react";
 import { Vacancies } from "../types";
 import { motion } from "framer-motion";
+import { useSelector } from "react-redux";
+import { StoreApp } from "../store";
 
 export const ModalVacancy: FC<{ data: Vacancies; onClose: () => void ;onClick: Dispatch<SetStateAction<boolean>>}> = ({
   data,
   onClose,
   onClick
 }) => {
-
+  const data1 = useSelector((store: StoreApp) => store.user.subscribeVacanciesID);
+  console.log(data1)
   return (
 
     <div className="fixed inset-0 flex items-center justify-center cursor-auto z-10">

@@ -17,6 +17,7 @@ export type userState = {
   password: string;
   repeatPassword: string;
   companyName: string;
+  subscribeVacanciesID: Array<number>;
   role: string;
 }
 
@@ -66,3 +67,5 @@ export type VacanciesState = {
 export type VacancyCardProps = {
   data: Vacancies;
 };
+
+
