@@ -20,8 +20,10 @@ export const App: FC = () => {
   const username = useSelector((store:StoreApp) => store.user.username)
 
   useEffect(() => {
-    dispatch(getInfoApplicant(username));
-    dispatch(fetchGetVacancies());
+    if(username){
+      dispatch(getInfoApplicant(username));
+      dispatch(fetchGetVacancies());
+    }
   },[])
 
 

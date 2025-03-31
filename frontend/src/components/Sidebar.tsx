@@ -68,6 +68,7 @@ const IconSidebar: FC<IconSidebarProps> = ({ ...props }) => {
   const handleClick = (e: React.MouseEvent) => {
     if (props.title === "Logout") {
       sessionStorage.removeItem('role');
+      sessionStorage.removeItem('username');
       dispatch(resetUserForm());
       handleLogout(e);
     }
