@@ -69,4 +69,7 @@ export type VacancyCardProps = {
   title: string;
 };
 
-
+export type MyVacanciesProps = {
+  title: string;
+  description: string;
+}

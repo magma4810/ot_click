@@ -16,7 +16,6 @@ import { getInfoApplicant } from "./store/user.slice";
 export const App: FC = () => {
 
   const dispatch = useAppDispatch();
-  const role = useSelector((store:StoreApp) => store.user.role)
   const username = useSelector((store:StoreApp) => store.user.username)
 
   useEffect(() => {
@@ -35,7 +34,8 @@ export const App: FC = () => {
         <Route path="company-signup" element={<CompanySignup />} />
         <Route element={<ProtectedRoute />}>
           <Route path="vacancies" element={<Vacancies />}/>
-          {role === 'applicant' && <Route path="my-vacancies" element={<MyVacancies />}/>}
+          <Route path="my-vacancies" element={<MyVacancies title={"Нет вакансий на которые вы откликнулись"} description={"Нажмите на Ot`click в карточке вакансии, чтобы она здесь появилась"}/>}/>
+          <Route path="active-vacancies" element={<MyVacancies title={"Нет вакансий которые вы опубликовали"} description={"Нажмите на Publish во вкладке Create vacancy, чтобы она здесь появилась"}/>}/>
         </Route>
       </Routes>
     </HashRouter>

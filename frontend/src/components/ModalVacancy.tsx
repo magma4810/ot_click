@@ -1,6 +1,8 @@
 import { Dispatch, FC, SetStateAction } from "react";
 import { Vacancies } from "../types";
 import { motion } from "framer-motion";
+import { useSelector } from "react-redux";
+import { StoreApp } from "../store";
 
 export const ModalVacancy: FC<{ title: string, data: Vacancies; onClose: () => void ;onClick: Dispatch<SetStateAction<boolean>>}> = ({
   title,
@@ -8,6 +10,7 @@ export const ModalVacancy: FC<{ title: string, data: Vacancies; onClose: () => v
   onClose,
   onClick
 }) => {
+  const role = useSelector((store: StoreApp) => store.user.role);
   return (
 
     <div className="fixed inset-0 flex items-center justify-center cursor-auto z-10">
@@ -35,15 +38,18 @@ export const ModalVacancy: FC<{ title: string, data: Vacancies; onClose: () => v
             <Paragraph key={key} title={key} data={value} />
           ))}
         </div>
-        <button className=" flex justify-center items-center w-full " onClick={(e) => {
+        {role === "applicant" &&
+          <button className=" flex justify-center items-center w-full " onClick={(e) => {
             e.stopPropagation();
             onClick(true)
             onClose();
           }}>
-          <span className="bg-emerald-400/80 text-2xl w-[15vw] h-[7vh] rounded-[100px] cursor-pointer flex items-center justify-center">
+            <span className="bg-emerald-400/80 text-2xl w-[15vw] h-[7vh] rounded-[100px] cursor-pointer flex items-center justify-center">
             {title}
           </span>
         </button>
+        }
+          
       </motion.div>
     </div>
   );

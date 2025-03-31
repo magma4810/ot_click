@@ -3,12 +3,13 @@ import { Sidebar } from "./Sidebar";
 import { useSelector } from "react-redux";
 import { StoreApp } from "../store";
 import { VacancyCard } from "./VacancyCard";
+import { MyVacanciesProps } from "../types";
 
-export const MyVacancies: FC = () => {
+export const MyVacancies: FC<MyVacanciesProps> = ({...props}) => {
   const loading = useSelector((store: StoreApp) => store.vacancies.loading);
   const vacancies = useSelector((store: StoreApp) => store.vacancies.vacancies);
   const subscribeVacanciesID = useSelector((store: StoreApp) => store.user.subscribeVacanciesID);
-
+  
   return (
     <div className="flex min-h-0">
       <Sidebar />
@@ -26,8 +27,8 @@ export const MyVacancies: FC = () => {
                 </svg>
               </div>
             </div>
-            <h3 className="text-2xl font-medium text-gray-600 mb-2">Нет вакансий на которые вы откликнулись</h3>
-            <p className="text-gray-400 max-w-md text-center">Нажмите на Ot`click в карточке вакансии, чтобы она здесь появилась</p>
+            <h3 className="text-2xl font-medium text-gray-600 mb-2">{props.title}</h3>
+            <p className="text-gray-400 max-w-md text-center">{props.description}</p>
           </div>
         ) : (
           <div className="flex flex-wrap justify-around items-start w-full p-4 overflow-y-auto">

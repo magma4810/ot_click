@@ -74,6 +74,8 @@ export const userSlice = createSlice({
             state.password = '';
             state.repeatPassword = '';
             state.companyName = '';
+            state.subscribeVacanciesID = [];
+            state.role = '';
           },
           addSubscribeVacanciesID: (state, action: PayloadAction<number>) => {
             state.subscribeVacanciesID = [...state.subscribeVacanciesID, action.payload];
