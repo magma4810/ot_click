@@ -24,13 +24,13 @@ export const CreateVacancy: FC = () => {
     title: '',
     description: '',
     location: '',
-    salary: 0,
+    salary: '',
     englishLvl: 'Не требуется',
-    grade: '',
+    grade: 'Не указано',
     tags: '',
-    experience: '',
+    experience: 'Не указано',
     skills: '',
-    employmentType: '',
+    employmentType: 'Полная занятость',
     category_id: 'IT'
   };
   const [formData, setFormData] = useState(INITIAL_FORM_STATE);
@@ -85,7 +85,7 @@ export const CreateVacancy: FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Локация</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Локация*</label>
                   <input
                     type="text"
                     name="location"
@@ -101,7 +101,7 @@ export const CreateVacancy: FC = () => {
               {/* Детали вакансии */}
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Зарплата</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Зарплата*</label>
                   <div className="relative">
                     <input
                       type="number"
@@ -110,6 +110,9 @@ export const CreateVacancy: FC = () => {
                       onChange={handleChange}
                       className="w-full pl-4 pr-12 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                       placeholder="120000"
+                      step="5000"
+                      min={0}
+                      required
                     />
                     <span className="absolute right-3 top-2 text-gray-500">₽</span>
                   </div>
@@ -183,7 +186,7 @@ export const CreateVacancy: FC = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Ключевые навыки*</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Ключевые навыки</label>
               <textarea
                 name="skills"
                 value={formData.skills}
@@ -191,7 +194,6 @@ export const CreateVacancy: FC = () => {
                 rows={1}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Основные технологии и навыки"
-                required
               />
             </div>
 
@@ -204,7 +206,8 @@ export const CreateVacancy: FC = () => {
                       type="radio"
                       name="employmentType"
                       value={type}
-                      checked={formData.employmentType === type}
+                      checked={formData.employmentType === type|| 
+                        (formData.employmentType === '' && type === 'Полная занятость')}
                       onChange={handleChange}
                       className="h-4 w-4 text-blue-600 focus:ring-blue-500"
                     />
@@ -218,6 +221,7 @@ export const CreateVacancy: FC = () => {
               <button
                 type="button"
                 className="px-6 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+                onClick={() => setFormData(INITIAL_FORM_STATE)}
               >
                 Отменить
               </button>

@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
 import { StoreApp } from "../store";
 
-export const ModalVacancy: FC<{ title: string, data: Vacancies; onClose: () => void ;onClick: Dispatch<SetStateAction<boolean>>}> = ({
+export const ModalVacancy: FC<{ title: string, data: Vacancies; onClose: () => void; onClick: Dispatch<SetStateAction<boolean>> }> = ({
   title,
   data,
   onClose,
@@ -34,9 +34,12 @@ export const ModalVacancy: FC<{ title: string, data: Vacancies; onClose: () => v
 
         <h2 className="text-2xl font-bold mb-4">{data.title}</h2>
         <div className="prose dark:prose-invert">
-          {Object.entries(data).map(([key, value]) => (
-            <Paragraph key={key} title={key} data={value} />
-          ))}
+          {Object.entries(data)
+            .filter(([, value]) => value !== '') 
+            .map(([key, value]) => (
+              <Paragraph key={key} title={key} data={value} />
+            ))
+          }
         </div>
         {role === "applicant" &&
           <button className=" flex justify-center items-center w-full " onClick={(e) => {
@@ -44,11 +47,11 @@ export const ModalVacancy: FC<{ title: string, data: Vacancies; onClose: () => v
             onClick(true)
             onClose();
           }}>
-            
+
             <span className="bg-emerald-400/80 text-2xl w-[15vw] h-[7vh] rounded-[100px] cursor-pointer flex items-center justify-center">
-            {title}
-          </span>
-        </button>
+              {title}
+            </span>
+          </button>
         }
         {role === "employer" && title === "Cancel" &&
           <button className=" flex justify-center items-center w-full " onClick={(e) => {
@@ -56,13 +59,13 @@ export const ModalVacancy: FC<{ title: string, data: Vacancies; onClose: () => v
             onClick(true)
             onClose();
           }}>
-            
+
             <span className="bg-emerald-400/80 text-2xl w-[15vw] h-[7vh] rounded-[100px] cursor-pointer flex items-center justify-center">
-            {title}
-          </span>
-        </button>
+              {title}
+            </span>
+          </button>
         }
-          
+
       </motion.div>
     </div>
   );
@@ -113,9 +116,9 @@ const formatFieldValue = (
     case "tags":
       return typeof data === "string"
         ? data
-            .split(",")
-            .map((tag) => tag.trim())
-            .join(", ")
+          .split(",")
+          .map((tag) => tag.trim())
+          .join(", ")
         : String(data);
     default:
       return String(data);
