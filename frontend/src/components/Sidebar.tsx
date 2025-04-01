@@ -21,15 +21,14 @@ export const Sidebar: FC = () => {
           href={"/ot_click/#/vacancies"}
           hash={"#/vacancies"}
         />
-        {role === 'applicant' &&
+        {role === 'applicant' ?
           <IconSidebar
             src={my_vacancies}
             title={"My Vacancies"}
             href={"/ot_click/#/my-vacancies"}
             hash={"#/my-vacancies"}
           />
-        }
-        {role !== 'applicant' &&
+        :
           <>
             <IconSidebar
               src={my_vacancies}
@@ -79,7 +78,6 @@ const IconSidebar: FC<IconSidebarProps> = ({ ...props }) => {
       if (!response.ok) {
         throw new Error("Logout failed");
       }
-      dispatch(logout());
       navigate("/signin");
     } catch (error) {
       console.error("Logout failed:", error);
@@ -91,6 +89,7 @@ const IconSidebar: FC<IconSidebarProps> = ({ ...props }) => {
       sessionStorage.removeItem('role');
       sessionStorage.removeItem('username');
       dispatch(resetUserForm());
+      dispatch(logout());
       handleLogout(e);
     }
   };
