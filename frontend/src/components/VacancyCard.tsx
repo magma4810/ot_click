@@ -3,6 +3,7 @@ import { VacancyCardProps } from "../types";
 import { ModalVacancy } from "./ModalVacancy";
 import { AnimatePresence } from "framer-motion";
 import checked from "../assets/checked.png";
+import user from "../assets/user.png";
 import { useSelector } from "react-redux";
 import { addSubscribeVacanciesID, deleteSubscribeVacanciesID, updateSubscriptionsID } from "../store/user.slice";
 import { StoreApp, useAppDispatch } from "../store";
@@ -19,17 +20,17 @@ export const VacancyCard: FC<VacancyCardProps> = ({ ...props }) => {
   const onClickSubscribeVacancie = () => {
     dispatch(addSubscribeVacanciesID(props.data.id));
     dispatch(updateSubscriptionsID({ username }));
-    dispatch(fetchChangeResponded({ 
-      id: props.data.id, 
-      subscribe: props.data.subscribe+1
+    dispatch(fetchChangeResponded({
+      id: props.data.id,
+      subscribe: props.data.subscribe + 1
     }));
   };
   const onClickCancelVacancie = () => {
     dispatch(deleteSubscribeVacanciesID(props.data.id));
     dispatch(updateSubscriptionsID({ username }));
-    dispatch(fetchChangeResponded({ 
-      id: props.data.id, 
-      subscribe: props.data.subscribe-1
+    dispatch(fetchChangeResponded({
+      id: props.data.id,
+      subscribe: props.data.subscribe - 1
     }));
   };
   useEffect(() => {
@@ -53,11 +54,19 @@ export const VacancyCard: FC<VacancyCardProps> = ({ ...props }) => {
         <div className="absolute flex top-1 justify-end items-center p-1">
 
           <span className=" w-[30%] h-[20%] text-xs text-emerald-400 rounded flex ">
-          <img src={checked} className="w-[17%] h-auto" alt="" />
+            <img src={checked} className="w-[17%] h-auto" alt="" />
             You responded
           </span>
         </div>
       )}
+      {role === "employer" && props.title === "Cancel" &&
+        <div className="absolute top-0 right-0 p-2 flex items-center">
+        <img src={user} className="w-6 h-6" alt="User" />
+        <span className="text-base text-emerald-400 ml-2">
+          {props.data.subscribe}
+        </span>
+      </div>
+      }
 
       <span className="text-center">{props.data.title}</span>
       <span className="text-center">
@@ -68,21 +77,21 @@ export const VacancyCard: FC<VacancyCardProps> = ({ ...props }) => {
 
       {isModalOpen && (
         <AnimatePresence>
-          {role === "applicant" ? 
+          {role === "applicant" ?
             <ModalVacancy
-            data={props.data}
-            onClose={() => setIsModalOpen(false)}
-            onClick={props.title === "Cancel" ? onClickCancelVacancie : onClickSubscribeVacancie}
-            title={props.title}
-          /> :
-          <ModalVacancy
-            data={props.data}
-            onClose={() => setIsModalOpen(false)}
-            onClick={() => dispatch(fetchChangeVacancyIsActiveFalse({id: props.data.id}))}
-            title={props.title}
-          />
-        }
-          
+              data={props.data}
+              onClose={() => setIsModalOpen(false)}
+              onClick={props.title === "Cancel" ? onClickCancelVacancie : onClickSubscribeVacancie}
+              title={props.title}
+            /> :
+            <ModalVacancy
+              data={props.data}
+              onClose={() => setIsModalOpen(false)}
+              onClick={() => dispatch(fetchChangeVacancyIsActiveFalse({ id: props.data.id }))}
+              title={props.title}
+            />
+          }
+
         </AnimatePresence>
       )}
     </div>

@@ -198,7 +198,7 @@ class UserController {
          SET "subscribe" = :subscribe
          WHERE id = :id`,
                 {
-                    replacements: { id,subscribe }
+                    replacements: { id, subscribe }
                 }
             );
             res.json(getData);
@@ -222,6 +222,28 @@ class UserController {
         } catch (error) {
             console.error('Ошибка при обновлении данных актуальности вакансии', error);
             res.status(500).json({ error: 'Ошибка при обновлении данных актуальности вакансии' });
+        }
+    }
+    async updatePublishedVacanciesID(req, res) {
+        try {
+            const { username } = req.params;
+            const { publishedVacanciesID } = req.body;
+
+            const [getData, metadata] = await sequelize.query(
+                `UPDATE "UsersEmployer" 
+         SET "vacanciesID" = ARRAY[:publishedVacanciesID]
+         WHERE username = :username`,
+                {
+                    replacements: {
+                        publishedVacanciesID,
+                        username
+                    }
+                }
+            );
+            res.json(getData);
+        } catch (error) {
+            console.error('Update error:', error);
+            res.status(500).json({ error: 'Update failed' });
         }
     }
     async updateSubscribeVacanciesID(req, res) {
@@ -249,6 +271,21 @@ class UserController {
         } catch (error) {
             console.error('Update error:', error);
             res.status(500).json({ error: 'Update failed' });
+        }
+    }
+    async createVacancy(req, res) {
+        const { title, description, companyName, location, salary, englishLvl, grade, tags, experience, skills, employmentType, category_id } = req.body;
+        try {
+            const result = await sequelize.query(
+                'INSERT INTO "Vacancies" (title, description, "companyName",location,salary,"englishLvl",grade,tags,experience,skills,"employmentType",category_id) VALUES (:title, :description,:companyName,:location, :salary,:englishLvl,:grade,:tags,:experience,:skills,:employmentType,:category_id) RETURNING *',
+                {
+                    replacements: { title, description, companyName, location, salary, englishLvl, grade, tags, experience, skills, employmentType, category_id }
+                }
+            );
+            res.json(result[0]);
+        } catch (error) {
+            console.error('Ошибка при создании вакансии', error);
+            res.status(500).json({ error: 'Ошибка при создании вакансии' });
         }
     }
 }

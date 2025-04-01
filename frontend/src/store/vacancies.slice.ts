@@ -65,6 +65,23 @@ export const fetchChangeVacancyIsActiveFalse = createAsyncThunk(
   }
 );
 
+export const fetchCreateVacancy = createAsyncThunk(
+  'user/fetchCreateVacancy',
+  async (payload: { data: object}) => {
+    const response = await fetch(`${API_URL}/createVacancy`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify(payload.data),
+    });
+    
+    if (!response.ok) {
+      throw new Error('Не удалось создать вакансию');
+    }
+    return await response.json();
+  }
+);
+
 export const vacanciesSlice = createSlice({
   name: "vacancies",
   initialState,

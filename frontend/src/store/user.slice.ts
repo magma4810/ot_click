@@ -8,7 +8,7 @@ const initialState: userState = {
     repeatPassword: "",
     companyName: "",
     subscribeVacanciesID: [],
-    publichedVacanciesID: [],
+    publishedVacanciesID: [],
     role: sessionStorage.getItem('role') || ""
 };
 const API_URL = import.meta.env.VITE_API_URL;
@@ -51,7 +51,8 @@ export const getInfoApplicant = createAsyncThunk(
       const data = await response.json();
       const applicantData = data[0];
 
-      dispatch(changePublichedVacanciesID(applicantData.vacanciesID));
+      dispatch(changePublishedVacanciesID(applicantData.vacanciesID));
+      dispatch(changeCompanyName(applicantData.companyNameUser));
       dispatch(changeLoading(false));
       return applicantData; 
     }
@@ -72,6 +73,37 @@ export const updateSubscriptionsID = createAsyncThunk(
       return response.json();
     }
   );
+
+
+ export const updatePublishedVacanciesID = createAsyncThunk(
+  'user/updatePublishedVacanciesID',
+  async ({ username, newPublishedVacanciesID }: { 
+    username: string, 
+    newPublishedVacanciesID: number 
+  }, { getState }) => {
+    
+    const { user } = getState() as { user: userState };
+    
+    const updatedArray = [
+      ...(user.publishedVacanciesID || []), 
+      newPublishedVacanciesID
+    ];
+
+    const response = await fetch(`${API_URL}/updatePublishedVacanciesID/${username}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({
+        publishedVacanciesID: updatedArray
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to update published vacancies');
+    }
+    return updatedArray;
+  }
+);
   
 export const userSlice = createSlice({
     name: "user",
@@ -109,8 +141,8 @@ export const userSlice = createSlice({
         changeSubscribeVacanciesID: (state, action: PayloadAction<number[]>) => {
             state.subscribeVacanciesID = action.payload;
         },
-        changePublichedVacanciesID: (state, action: PayloadAction<number[]>) => {
-          state.publichedVacanciesID = action.payload;
+        changePublishedVacanciesID: (state, action: PayloadAction<number[]>) => {
+          state.publishedVacanciesID = action.payload;
       },
     },
     
@@ -118,4 +150,4 @@ export const userSlice = createSlice({
 
 export const userReducer = userSlice.reducer;
 
-export const { changeUsername,changePublichedVacanciesID,deleteSubscribeVacanciesID,addSubscribeVacanciesID,changeSubscribeVacanciesID, changePassword,changeRepeatPassword,changeCompanyName,changeRole,resetUserForm } = userSlice.actions;
+export const { changeUsername,changePublishedVacanciesID,deleteSubscribeVacanciesID,addSubscribeVacanciesID,changeSubscribeVacanciesID, changePassword,changeRepeatPassword,changeCompanyName,changeRole,resetUserForm } = userSlice.actions;

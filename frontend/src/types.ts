@@ -18,7 +18,7 @@ export type userState = {
   repeatPassword: string;
   companyName: string;
   subscribeVacanciesID: Array<number>;
-  publichedVacanciesID: Array<number>;
+  publishedVacanciesID: Array<number>;
   role: string;
 }
 
