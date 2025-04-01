@@ -10,6 +10,7 @@ export const MyVacancies: FC<MyVacanciesProps> = ({...props}) => {
   const vacancies = useSelector((store: StoreApp) => store.vacancies.vacancies);
   const subscribeVacanciesID = useSelector((store: StoreApp) => store.user.subscribeVacanciesID);
   const publichedVacanciesID = useSelector((store: StoreApp) => store.user.publichedVacanciesID);
+  console.log(publichedVacanciesID)
   const role = useSelector((store: StoreApp) => store.user.role);
   return (
     <div className="flex min-h-0">
@@ -18,7 +19,8 @@ export const MyVacancies: FC<MyVacanciesProps> = ({...props}) => {
           <div className="flex items-center justify-center h-[60vh] w-full text-sky-500 opacity-50 text-8xl">
             Loading...
           </div>
-        ) : (subscribeVacanciesID.length === 0 && publichedVacanciesID.length === 0) ? (
+        ) : (subscribeVacanciesID.length === 0 && vacancies
+          .filter(vacancy => publichedVacanciesID.includes(vacancy.id) && vacancy.is_active).length === 0) ? (
           <div className="flex flex-col items-center justify-center h-[60vh] w-full">
             <div className="relative w-[7vw] h-[7vw] mb-6">
               <div className="absolute inset-0 rounded-full bg-blue-100 animate-pulse"></div>
