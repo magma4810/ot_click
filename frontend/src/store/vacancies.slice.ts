@@ -47,6 +47,23 @@ export const fetchChangeResponded = createAsyncThunk(
     }))
   }
 );
+export const fetchChangeVacancyIsActiveFalse = createAsyncThunk(
+  'user/fetchChangeVacancyIsActiveFalse',
+  async (payload: { id: number},{dispatch}) => {
+    const response = await fetch(`${API_URL}/changeVacancyIsActiveFalse/${payload.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error('Не удалось обновить откликнувшихся');
+    }
+    dispatch(changeVacancyIsActiveFalse({
+      id: payload.id
+    }))
+  }
+);
 
 export const vacanciesSlice = createSlice({
   name: "vacancies",
@@ -63,9 +80,15 @@ export const vacanciesSlice = createSlice({
       if (vacancy) {
         vacancy.subscribe = action.payload.count;
       }
+    },
+    changeVacancyIsActiveFalse: (state, action: PayloadAction<{ id: number}>) => {
+      const vacancy = state.vacancies.find(v => v.id === action.payload.id);
+      if (vacancy) {
+        vacancy.is_active = false;
+      }
     }
   },
 });
 
 export const vacanciesReducer = vacanciesSlice.reducer;
-export const { changeVacancies, changeResponded, changeLoading } = vacanciesSlice.actions;
+export const { changeVacancies, changeResponded,changeVacancyIsActiveFalse, changeLoading } = vacanciesSlice.actions;

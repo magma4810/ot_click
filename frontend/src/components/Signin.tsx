@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { login } from "../store/auth.slice";
 import { useNavigate } from "react-router-dom";
 import { StoreApp, useAppDispatch } from "../store";
-import {changeRole, getInfoApplicant } from "../store/user.slice";
+import {changeRole, getInfoApplicant, getInfoEmployer } from "../store/user.slice";
 import { changeErrorPassword, changeErrorUsername, changeErrorUserNotFound,changeErrorUserPassword } from "../store/errors.slice";
 
 export const Signin: FC = () => {
@@ -61,6 +61,8 @@ export const Signin: FC = () => {
         dispatch(changeRole(dataUser.role));
         if(dataUser.role === "applicant"){
           dispatch(getInfoApplicant(username));
+        }else{
+          dispatch(getInfoEmployer(username));
         }
         navigate("/vacancies");
       } catch (error) {

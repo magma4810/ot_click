@@ -6,7 +6,7 @@ import checked from "../assets/checked.png";
 import { useSelector } from "react-redux";
 import { addSubscribeVacanciesID, deleteSubscribeVacanciesID, updateSubscriptionsID } from "../store/user.slice";
 import { StoreApp, useAppDispatch } from "../store";
-import { fetchChangeResponded } from "../store/vacancies.slice";
+import { fetchChangeResponded, fetchChangeVacancyIsActiveFalse } from "../store/vacancies.slice";
 
 export const VacancyCard: FC<VacancyCardProps> = ({ ...props }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -14,6 +14,7 @@ export const VacancyCard: FC<VacancyCardProps> = ({ ...props }) => {
   const dispatch = useAppDispatch();
   const subscribeVacanciesID = useSelector((store: StoreApp) => store.user.subscribeVacanciesID);
   const username = useSelector((store: StoreApp) => store.user.username);
+  const role = useSelector((store: StoreApp) => store.user.role);
   const check = ((props.title === "Cancel") || (!subscribeVacanciesID.includes(props.data.id)));
   const onClickSubscribeVacancie = () => {
     dispatch(addSubscribeVacanciesID(props.data.id));
@@ -45,7 +46,7 @@ export const VacancyCard: FC<VacancyCardProps> = ({ ...props }) => {
 
   return (
     <div
-      className={`relative bg-cyan-800/50 w-[20vw] h-[20vh] flex flex-col items-center justify-evenly p-3.5 m-1.5 rounded-[3px] ${check && "cursor-pointer"} `}
+      className={`relative ${props.data.is_active ? "bg-cyan-800/50" : " bg-red-900/30"} w-[20vw] h-[20vh] flex flex-col items-center justify-evenly p-3.5 m-1.5 rounded-[3px] ${check && "cursor-pointer"} `}
       onClick={() => check && setIsModalOpen(true)}
     >
       {(subscribeVacanciesID.includes(props.data.id)) && (
@@ -67,12 +68,21 @@ export const VacancyCard: FC<VacancyCardProps> = ({ ...props }) => {
 
       {isModalOpen && (
         <AnimatePresence>
-          <ModalVacancy
+          {role === "applicant" ? 
+            <ModalVacancy
             data={props.data}
             onClose={() => setIsModalOpen(false)}
             onClick={props.title === "Cancel" ? onClickCancelVacancie : onClickSubscribeVacancie}
             title={props.title}
+          /> :
+          <ModalVacancy
+            data={props.data}
+            onClose={() => setIsModalOpen(false)}
+            onClick={() => dispatch(fetchChangeVacancyIsActiveFalse({id: props.data.id}))}
+            title={props.title}
           />
+        }
+          
         </AnimatePresence>
       )}
     </div>

@@ -44,6 +44,19 @@ export const ModalVacancy: FC<{ title: string, data: Vacancies; onClose: () => v
             onClick(true)
             onClose();
           }}>
+            
+            <span className="bg-emerald-400/80 text-2xl w-[15vw] h-[7vh] rounded-[100px] cursor-pointer flex items-center justify-center">
+            {title}
+          </span>
+        </button>
+        }
+        {role === "employer" && title === "Cancel" &&
+          <button className=" flex justify-center items-center w-full " onClick={(e) => {
+            e.stopPropagation();
+            onClick(true)
+            onClose();
+          }}>
+            
             <span className="bg-emerald-400/80 text-2xl w-[15vw] h-[7vh] rounded-[100px] cursor-pointer flex items-center justify-center">
             {title}
           </span>
@@ -79,7 +92,7 @@ const Paragraph: FC<{ title: string; data: string | boolean | number }> = ({
   return (
     <p>
       <strong>{fieldNames[props.title] || props.title}: </strong>
-      {formatFieldValue(props.title, props.data)}
+      <span className={`${props.data === false && props.title === "is_active" ? "text-red-800" : ""} `}>{formatFieldValue(props.title, props.data)}</span>
     </p>
   );
 };

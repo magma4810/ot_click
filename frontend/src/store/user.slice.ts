@@ -8,6 +8,7 @@ const initialState: userState = {
     repeatPassword: "",
     companyName: "",
     subscribeVacanciesID: [],
+    publichedVacanciesID: [],
     role: sessionStorage.getItem('role') || ""
 };
 const API_URL = import.meta.env.VITE_API_URL;
@@ -29,6 +30,28 @@ export const getInfoApplicant = createAsyncThunk(
       const applicantData = data[0];
 
       dispatch(changeSubscribeVacanciesID(applicantData.subscribeVacanciesID));
+      dispatch(changeLoading(false));
+      return applicantData; 
+    }
+  );
+
+  export const getInfoEmployer = createAsyncThunk(
+    'user/getInfoApplicant',
+    async (username: string, { dispatch }) => {
+      const response = await fetch(`${API_URL}/getInfoEmployer/${username}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include"
+      });
+  
+      if (!response.ok) {
+        throw new Error('Не удалось загрузить данные работадателя');
+      }
+  
+      const data = await response.json();
+      const applicantData = data[0];
+
+      dispatch(changePublichedVacanciesID(applicantData.vacanciesID));
       dispatch(changeLoading(false));
       return applicantData; 
     }
@@ -86,10 +109,13 @@ export const userSlice = createSlice({
         changeSubscribeVacanciesID: (state, action: PayloadAction<number[]>) => {
             state.subscribeVacanciesID = action.payload;
         },
+        changePublichedVacanciesID: (state, action: PayloadAction<number[]>) => {
+          state.publichedVacanciesID = action.payload;
+      },
     },
     
 });
 
 export const userReducer = userSlice.reducer;
 
-export const { changeUsername,deleteSubscribeVacanciesID,addSubscribeVacanciesID,changeSubscribeVacanciesID, changePassword,changeRepeatPassword,changeCompanyName,changeRole,resetUserForm } = userSlice.actions;
+export const { changeUsername,changePublichedVacanciesID,deleteSubscribeVacanciesID,addSubscribeVacanciesID,changeSubscribeVacanciesID, changePassword,changeRepeatPassword,changeCompanyName,changeRole,resetUserForm } = userSlice.actions;

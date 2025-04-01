@@ -159,6 +159,21 @@ class UserController {
             res.status(500).json({ error: 'Ошибка при получении данных соискателя' });
         }
     }
+    async getInfoEmployer(req, res) {
+        const { username } = req.params;
+        try {
+            const [getData, metadata] = await sequelize.query(
+                'SELECT * FROM "UsersEmployer" WHERE username = :username',
+                {
+                    replacements: { username }
+                }
+            );
+            res.json(getData);
+        } catch (error) {
+            console.error('Ошибка при получении данных работадателя', error);
+            res.status(500).json({ error: 'Ошибка при получении данных работадателя' });
+        }
+    }
     async getSubscribe(req, res) {
         const { id } = req.params;
         try {
@@ -190,6 +205,23 @@ class UserController {
         } catch (error) {
             console.error('Ошибка при обновлении данных кол ва отликнувшихся', error);
             res.status(500).json({ error: 'Ошибка при обновлении данных кол ва отликнувшихся' });
+        }
+    }
+    async changeVacancyIsActiveFalse(req, res) {
+        const { id } = req.params;
+        try {
+            const [getData, metadata] = await sequelize.query(
+                `UPDATE "Vacancies" 
+         SET "is_active" = false
+         WHERE id = :id`,
+                {
+                    replacements: { id }
+                }
+            );
+            res.json(getData);
+        } catch (error) {
+            console.error('Ошибка при обновлении данных актуальности вакансии', error);
+            res.status(500).json({ error: 'Ошибка при обновлении данных актуальности вакансии' });
         }
     }
     async updateSubscribeVacanciesID(req, res) {
