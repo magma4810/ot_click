@@ -15,6 +15,7 @@ module.exports = {
           skills: 'JavaScript, React, Redux',
           employmentType: 'Полная занятость',
           category_id: 'IT',
+          subscribe: 1
         },
         {
           title: 'Backend Developer',
@@ -30,6 +31,7 @@ module.exports = {
           skills: 'Node.js, Express, SQL',
           employmentType: 'Полная занятость',
           category_id: 'IT',
+          subscribe: 1 
         },
         {
           title: 'Data Scientist',
@@ -45,6 +47,7 @@ module.exports = {
           skills: 'Python, Pandas, Scikit-learn',
           employmentType: 'Удаленная работа',
           category_id: 'Data Science',
+          subscribe: 2
         },
         {
           title: 'DevOps Engineer',
@@ -60,6 +63,7 @@ module.exports = {
           skills: 'Linux, Bash, Ansible',
           employmentType: 'Полная занятость',
           category_id: 'DevOps',
+          subscribe: 1 
         },
         {
           title: 'UI/UX Designer',
@@ -75,6 +79,7 @@ module.exports = {
           skills: 'Figma, Photoshop, Illustrator',
           employmentType: 'Частичная занятость',
           category_id: 'Design',
+          subscribe: 2
         },
         {
           title: 'Product Manager',
@@ -90,6 +95,7 @@ module.exports = {
           skills: 'Jira, Confluence, Roadmapping',
           employmentType: 'Полная занятость',
           category_id: 'Management',
+          subscribe: 1 
         },
         {
           title: 'Mobile Developer',
@@ -105,6 +111,7 @@ module.exports = {
           skills: 'React Native, JavaScript, Redux',
           employmentType: 'Полная занятость',
           category_id: 'Mobile Development',
+          subscribe: 2 
         },
         {
           title: 'QA Engineer',
@@ -120,6 +127,7 @@ module.exports = {
           skills: 'Test Cases, Bug Tracking, SQL',
           employmentType: 'Полная занятость',
           category_id: 'QA',
+          subscribe: 1 
         },
         {
           title: 'Marketing Specialist',
@@ -135,6 +143,7 @@ module.exports = {
           skills: 'SEO, Content Marketing, Social Media',
           employmentType: 'Полная занятость',
           category_id: 'Marketing',
+          subscribe: 1 
         },
         {
           title: 'Content Manager',
@@ -150,6 +159,7 @@ module.exports = {
           skills: 'WordPress, HTML, SEO',
           employmentType: 'Частичная занятость',
           category_id: 'Marketing',
+          subscribe: 1
         },
         {
             title: 'Full-Stack Developer',
@@ -165,6 +175,7 @@ module.exports = {
             skills: 'JavaScript, React, Node.js, REST API',
             employmentType: 'Полная занятость',
             category_id: 'IT',
+            subscribe: 1
           },
           {
             title: 'System Administrator',
@@ -180,6 +191,7 @@ module.exports = {
             skills: 'Linux, Bash, Ansible, Docker',
             employmentType: 'Полная занятость',
             category_id: 'IT',
+            subscribe: 2
           },
           {
             title: 'Big Data Engineer',
@@ -195,6 +207,7 @@ module.exports = {
             skills: 'Hadoop, Spark, Python, SQL',
             employmentType: 'Удаленная работа',
             category_id: 'Data Science',
+            subscribe: 1
           },
           {
             title: 'Data Analyst',
@@ -210,6 +223,7 @@ module.exports = {
             skills: 'SQL, Python, Excel, Tableau',
             employmentType: 'Полная занятость',
             category_id: 'Data Science',
+            subscribe: 2
           },
           {
             title: 'Graphic Designer',
@@ -225,6 +239,7 @@ module.exports = {
             skills: 'Photoshop, Illustrator, InDesign',
             employmentType: 'Частичная занятость',
             category_id: 'Design',
+            subscribe: 2
           },
           {
             title: 'Web Designer',
@@ -240,6 +255,7 @@ module.exports = {
             skills: 'Figma, Adobe XD, HTML, CSS',
             employmentType: 'Полная занятость',
             category_id: 'Design',
+            subscribe: 1
           },
           {
             title: 'iOS Developer',
@@ -255,6 +271,7 @@ module.exports = {
             skills: 'Swift, Objective-C, Xcode, REST API',
             employmentType: 'Полная занятость',
             category_id: 'Mobile Development',
+            subscribe: 1
           },
           {
             title: 'Android Developer',
@@ -270,6 +287,7 @@ module.exports = {
             skills: 'Kotlin, Java, Android Studio, REST API',
             employmentType: 'Полная занятость',
             category_id: 'Mobile Development',
+            subscribe: 1
           },
           {
             title: 'SEO Specialist',
@@ -285,6 +303,7 @@ module.exports = {
             skills: 'SEO, Google Analytics, Keyword Research',
             employmentType: 'Полная занятость',
             category_id: 'Marketing',
+            subscribe: 1
           },
           {
             title: 'SMM Manager',
@@ -300,6 +319,7 @@ module.exports = {
             skills: 'Instagram, Facebook, TikTok, Analytics',
             employmentType: 'Частичная занятость',
             category_id: 'Marketing',
+            subscribe: 1
           },
           {
             title: 'Cloud Engineer',
@@ -315,6 +335,7 @@ module.exports = {
             skills: 'AWS, Kubernetes, Terraform, CI/CD',
             employmentType: 'Полная занятость',
             category_id: 'DevOps',
+            subscribe: 2
           },
           {
             title: 'QA Automation Engineer',
@@ -330,6 +351,7 @@ module.exports = {
             skills: 'Selenium, Python, Jenkins, Git',
             employmentType: 'Полная занятость',
             category_id: 'QA',
+            subscribe: 2
           },
           {
             title: 'Machine Learning Engineer',
@@ -345,6 +367,7 @@ module.exports = {
             skills: 'Python, TensorFlow, PyTorch, SQL',
             employmentType: 'Удаленная работа',
             category_id: 'Data Science',
+            subscribe: 1
           },
           {
             title: 'Business Intelligence Analyst',
@@ -360,6 +383,7 @@ module.exports = {
             skills: 'SQL, Power BI, Excel, Data Visualization',
             employmentType: 'Полная занятость',
             category_id: 'Data Science',
+            subscribe: 1
           },
           {
             title: '3D Artist',
@@ -375,6 +399,7 @@ module.exports = {
             skills: 'Blender, Maya, Texturing, Animation',
             employmentType: 'Полная занятость',
             category_id: 'Design',
+            subscribe: 1
           },
           {
             title: 'Motion Designer',
@@ -390,6 +415,7 @@ module.exports = {
             skills: 'After Effects, Premiere Pro, Animation',
             employmentType: 'Полная занятость',
             category_id: 'Design',
+            subscribe: 1
           },
           {
             title: 'Flutter Developer',
@@ -405,6 +431,7 @@ module.exports = {
             skills: 'Flutter, Dart, REST API, Firebase',
             employmentType: 'Полная занятость',
             category_id: 'Mobile Development',
+            subscribe: 1
           },
           {
             title: 'Unity Developer',
@@ -420,6 +447,7 @@ module.exports = {
             skills: 'Unity, C#, 3D Graphics, Game Design',
             employmentType: 'Полная занятость',
             category_id: 'Game Development',
+            subscribe: 1
           },
           {
             title: 'PPC Specialist',
@@ -435,6 +463,7 @@ module.exports = {
             skills: 'Google Ads, Яндекс.Директ, Analytics',
             employmentType: 'Полная занятость',
             category_id: 'Marketing',
+            subscribe: 1
           },
           {
             title: 'Content Writer',
@@ -450,6 +479,7 @@ module.exports = {
             skills: 'SEO, Copywriting, Grammar, Research',
             employmentType: 'Частичная занятость',
             category_id: 'Marketing',
+            subscribe: 2
           },
           {
             title: 'Blockchain Developer',
@@ -465,6 +495,7 @@ module.exports = {
             skills: 'Solidity, Ethereum, Web3.js, Smart Contracts',
             employmentType: 'Полная занятость',
             category_id: 'Blockchain',
+            subscribe: 1
           },
           {
             title: 'Cybersecurity Specialist',
@@ -480,6 +511,7 @@ module.exports = {
             skills: 'Penetration Testing, Firewalls, SIEM',
             employmentType: 'Полная занятость',
             category_id: 'Security',
+            subscribe: 1
           },
           {
             title: 'AR/VR Developer',
@@ -495,6 +527,7 @@ module.exports = {
             skills: 'Unity, ARKit, ARCore, 3D Modeling',
             employmentType: 'Полная занятость',
             category_id: 'Game Development',
+            subscribe: 0
           },
           {
             title: 'Technical Writer',
@@ -510,6 +543,7 @@ module.exports = {
             skills: 'Technical Writing, Markdown, API Documentation',
             employmentType: 'Полная занятость',
             category_id: 'Technical Writing',
+            subscribe: 0
           },
           {
             title: 'Customer Support Specialist',
@@ -525,6 +559,7 @@ module.exports = {
             skills: 'Communication, CRM, Problem Solving',
             employmentType: 'Полная занятость',
             category_id: 'Support',
+            subscribe: 0
           },
       ], {});
     },

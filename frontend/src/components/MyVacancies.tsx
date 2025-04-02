@@ -16,7 +16,7 @@ export const MyVacancies: FC<MyVacanciesProps> = ({...props}) => {
     if (role === "applicant") {
       return vacancies.filter(v => subscribeVacanciesID?.includes(v.id));
     } else {
-      return vacancies.filter(v => publishedVacanciesID?.includes(v.id) && v.is_active);
+      return vacancies.filter(v => publishedVacanciesID?.includes(v.id));
     }
   }, [vacancies, publishedVacanciesID, role, subscribeVacanciesID]); 
 
@@ -56,7 +56,8 @@ export const MyVacancies: FC<MyVacanciesProps> = ({...props}) => {
       <Sidebar />
       <div className="flex flex-wrap justify-around items-start w-full p-4 overflow-y-auto">
         {filteredVacancies.map((data: Vacancies) => (
-          <VacancyCard data={data} key={data.id} title={"Cancel"} />
+          (data.is_active ? <VacancyCard data={data} key={data.id} title={"Cancel"} /> : <VacancyCard data={data} key={data.id} title={"Activated"} />)
+          
         ))}
       </div>
     </div>

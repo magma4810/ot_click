@@ -43,6 +43,7 @@ export const Vacancies = sequelize.define('Vacancies', {
   is_active: {
     type: DataTypes.BOOLEAN,
     defaultValue: true,
+    allowNull: false,
   },
   experience: {
     type: DataTypes.STRING,
@@ -63,9 +64,10 @@ export const Vacancies = sequelize.define('Vacancies', {
   subscribe: {
     type: DataTypes.INTEGER,
     defaultValue: 0,
+    allowNull: false,
   },
 }, {
-    timestamps: false 
+    timestamps: false
   });
 
 

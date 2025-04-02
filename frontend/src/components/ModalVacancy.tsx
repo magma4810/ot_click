@@ -53,7 +53,8 @@ export const ModalVacancy: FC<{ title: string, data: Vacancies; onClose: () => v
             </span>
           </button>
         }
-        {role === "employer" && title === "Cancel" &&
+        {role === "employer" &&
+        // && title === "Cancel"
           <button className=" flex justify-center items-center w-full " onClick={(e) => {
             e.stopPropagation();
             onClick(true)

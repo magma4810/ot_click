@@ -207,15 +207,16 @@ class UserController {
             res.status(500).json({ error: 'Ошибка при обновлении данных кол ва отликнувшихся' });
         }
     }
-    async changeVacancyIsActiveFalse(req, res) {
+    async changeVacancyIsActive(req, res) {
         const { id } = req.params;
+        const { active } = req.body;
         try {
             const [getData, metadata] = await sequelize.query(
                 `UPDATE "Vacancies" 
-         SET "is_active" = false
+         SET "is_active" = :active
          WHERE id = :id`,
                 {
-                    replacements: { id }
+                    replacements: { id,active }
                 }
             );
             res.json(getData);

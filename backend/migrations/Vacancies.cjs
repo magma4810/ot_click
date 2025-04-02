@@ -44,6 +44,7 @@ module.exports = {
       is_active: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
+        allowNull: false,
       },
       experience: {
         type: DataTypes.STRING,
@@ -64,6 +65,7 @@ module.exports = {
       subscribe: {
         type: DataTypes.INTEGER,
         defaultValue: 0,
+        allowNull: false,
       },
     });
   },

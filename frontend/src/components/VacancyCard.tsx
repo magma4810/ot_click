@@ -7,7 +7,7 @@ import user from "../assets/user.png";
 import { useSelector } from "react-redux";
 import { addSubscribeVacanciesID, deleteSubscribeVacanciesID, updateSubscriptionsID } from "../store/user.slice";
 import { StoreApp, useAppDispatch } from "../store";
-import { fetchChangeResponded, fetchChangeVacancyIsActiveFalse } from "../store/vacancies.slice";
+import { fetchChangeResponded, fetchChangeVacancyIsActive } from "../store/vacancies.slice";
 
 export const VacancyCard: FC<VacancyCardProps> = ({ ...props }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -32,6 +32,14 @@ export const VacancyCard: FC<VacancyCardProps> = ({ ...props }) => {
       id: props.data.id,
       subscribe: props.data.subscribe - 1
     }));
+  };
+  const onClickChangeIsActive = () => {
+    console.log(1)
+    if(props.title === "Cancel"){
+      dispatch(fetchChangeVacancyIsActive({ id: props.data.id, active: false }))
+    }else{
+      dispatch(fetchChangeVacancyIsActive({ id: props.data.id, active: true }))
+    }
   };
   useEffect(() => {
     if (isModalOpen) {
@@ -87,7 +95,7 @@ export const VacancyCard: FC<VacancyCardProps> = ({ ...props }) => {
             <ModalVacancy
               data={props.data}
               onClose={() => setIsModalOpen(false)}
-              onClick={() => dispatch(fetchChangeVacancyIsActiveFalse({ id: props.data.id }))}
+              onClick={onClickChangeIsActive}
               title={props.title}
             />
           }

@@ -8,7 +8,7 @@ userRouter.get('/getUserInfo/:username', userController.getUserInfoByName);
 userRouter.get('/getInfoApplicant/:username', userController.getInfoApplicant);
 userRouter.get('/getInfoEmployer/:username', userController.getInfoEmployer);
 userRouter.post('/updateSubscribeVacanciesID/:username', userController.updateSubscribeVacanciesID);
-userRouter.put('/changeVacancyIsActiveFalse/:id', userController.changeVacancyIsActiveFalse);
+userRouter.put('/changeVacancyIsActive/:id', userController.changeVacancyIsActive);
 userRouter.put('/updatePublishedVacanciesID/:username', userController.updatePublishedVacanciesID);
 userRouter.get('/getSubscribe/:id', userController.getSubscribe);
 userRouter.post('/updateSubscribe/:id', userController.updateSubscribe);
