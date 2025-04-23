@@ -34,7 +34,6 @@ export const VacancyCard: FC<VacancyCardProps> = ({ ...props }) => {
     }));
   };
   const onClickChangeIsActive = () => {
-    console.log(1)
     if(props.title === "Cancel"){
       dispatch(fetchChangeVacancyIsActive({ id: props.data.id, active: false }))
     }else{

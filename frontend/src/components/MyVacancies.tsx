@@ -1,9 +1,10 @@
-import { FC, useMemo } from "react";
+import { FC, useEffect, useMemo } from "react";
 import { Sidebar } from "./Sidebar";
 import { useSelector } from "react-redux";
 import { StoreApp } from "../store";
 import { VacancyCard } from "./VacancyCard";
 import { MyVacanciesProps, Vacancies } from "../types";
+import { useNavigate } from "react-router-dom";
 
 export const MyVacancies: FC<MyVacanciesProps> = ({...props}) => {
   const loading = useSelector((store: StoreApp) => store.vacancies.loading);
@@ -11,7 +12,12 @@ export const MyVacancies: FC<MyVacanciesProps> = ({...props}) => {
   const subscribeVacanciesID = useSelector((store: StoreApp) => store.user.subscribeVacanciesID);
   const publishedVacanciesID = useSelector((store: StoreApp) => store.user.publishedVacanciesID);
   const role = useSelector((store: StoreApp) => store.user.role);
-
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (role === "employer" && props.title === "Нет вакансий на которые вы откликнулись") {
+      navigate("/active-vacancies", { replace: true });
+    }
+  }, [role, navigate, props.title]);
   const filteredVacancies = useMemo(() => {
     if (role === "applicant") {
       return vacancies.filter(v => subscribeVacanciesID?.includes(v.id));

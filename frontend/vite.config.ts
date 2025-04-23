@@ -3,14 +3,13 @@ import react from "@vitejs/plugin-react-swc";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig(({ mode }) => {
-  // Загружаем переменные окружения в зависимости от режима (development/production)
   const env = loadEnv(mode, process.cwd(), "");
 
   return {
     plugins: [react(), tailwindcss()],
-    base: '/ot_click/', // Убираем условность для production
+    base: '/ot_click/', 
   build: {
-    outDir: 'dist/ot_click', // Явно указываем выходную папку
+    outDir: 'dist/ot_click',
     assetsDir: 'assets',
     manifest: true,
     rollupOptions: {

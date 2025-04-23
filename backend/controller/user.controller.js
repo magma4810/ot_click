@@ -72,7 +72,6 @@ class UserController {
                 secure: process.env.NODE_ENV === 'production'
             });
 
-            // Уничтожаем сессию
             req.session.destroy((err) => {
                 if (err) {
                     console.error('Session destruction error:', err);
@@ -82,16 +81,12 @@ class UserController {
                     });
                 }
 
-                // Очищаем сессионную куку после уничтожения сессии
                 res.clearCookie('connect.sid', {
                     path: '/',
                     httpOnly: true,
                     secure: process.env.NODE_ENV === 'production'
                 });
 
-                console.log('Cookies after clear:', req.cookies);
-
-                // Отправляем один ответ
                 res.json({
                     success: true,
                     message: 'Успешный выход',
@@ -138,7 +133,7 @@ class UserController {
         }
     }
     async checkAuthUser(req, res) {
-        if (req.session.user) {
+        if (req.session.isAuthenticated) {
             res.json({ isAuthenticated: true, user: req.session.user });
         } else {
             res.json({ isAuthenticated: false });

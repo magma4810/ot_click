@@ -11,6 +11,7 @@ export const ModalVacancy: FC<{ title: string, data: Vacancies; onClose: () => v
   onClick
 }) => {
   const role = useSelector((store: StoreApp) => store.user.role);
+
   return (
 
     <div className="fixed inset-0 flex items-center justify-center cursor-auto z-10">
@@ -41,7 +42,7 @@ export const ModalVacancy: FC<{ title: string, data: Vacancies; onClose: () => v
             ))
           }
         </div>
-        {role === "applicant" &&
+        {role === "applicant" && title !== "" &&
           <button className=" flex justify-center items-center w-full " onClick={(e) => {
             e.stopPropagation();
             onClick(true)
@@ -53,8 +54,7 @@ export const ModalVacancy: FC<{ title: string, data: Vacancies; onClose: () => v
             </span>
           </button>
         }
-        {role === "employer" &&
-        // && title === "Cancel"
+        {role === "employer" && location.hash === "#/active-vacancies" &&
           <button className=" flex justify-center items-center w-full " onClick={(e) => {
             e.stopPropagation();
             onClick(true)
