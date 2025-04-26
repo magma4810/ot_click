@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family:
+    Marker Felt,
+    fantasy;
+  background-image: linear-gradient(to top left, #1e3a8a, #67ffc2, #5242ff);
+}
+
+.text-glow {
+  text-shadow:
+    0 0 15px #4f5eff,
+    0 0 15px #ff00006b,
+    0 0 0px #75ff9e02;
+}

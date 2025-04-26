@@ -1,0 +1,22 @@
+
+
+services:
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile 
+    image: my_frontend_app
+    ports:
+      - "3000:3000"
+    container_name: my_frontend_app
+    restart: unless-stopped
+    depends_on:
+      - backend
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile 
+    image: my_backend_app
+    ports:
+      - "3001:3001"
+    container_name: my_backend_app

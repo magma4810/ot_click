@@ -1,0 +1,16 @@
+{
+  "name": "ot_click",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "lint-staged": {
+    "frontend/*.{ts,tsx}": "eslint --fix",
+    "frontend/*.{ts,tsx,css}": "prettier --write"
+  }
+}

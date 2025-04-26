@@ -1,0 +1,23 @@
+{
+  "rewrites": [
+    {
+      "source": "/ot_click/(.*)",
+      "destination": "/ot_click/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/ot_click/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ]
+}
