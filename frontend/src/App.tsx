@@ -38,9 +38,9 @@ export const App: FC = () => {
         <Route path="signin" element={<Signin />} />
         <Route path="signup" element={<Signup />} />
         <Route path="company-signup" element={<CompanySignup />} />
-          <Route path="/" element={<Signup />}/>
         <Route element={<ProtectedRoute />}>
-        <Route path="/vacancies/:id" element={<ModalVacancyID/>} />  
+        <Route path="/vacancies/:id" element={<ModalVacancyID/>} />
+          <Route path="/" element={<Vacancies />} />  
           <Route path="vacancies" element={<Vacancies />}/>
           <Route path="my-vacancies" element={<MyVacancies title={"Нет вакансий на которые вы откликнулись"} description={"Нажмите на Ot`click в карточке вакансии, чтобы она здесь появилась"}/>}/>
           <Route path="active-vacancies" element={<MyVacancies title={"Нет вакансий которые вы опубликовали"} description={"Нажмите на Publish во вкладке Create vacancy, чтобы она здесь появилась"}/>}/>
