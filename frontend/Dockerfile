@@ -1,29 +1,14 @@
-# Используем официальный образ Node.js для сборки
-FROM node:18 AS build
-
-# Устанавливаем рабочую директорию
+# Stage 1: Build the application
+FROM node:18 as builder
 WORKDIR /app
-
-# Копируем package.json и package-lock.json
 COPY package*.json ./
-
-# Устанавливаем зависимости
 RUN npm install
-
-# Копируем исходный код
 COPY . .
-
-# Собираем проект
 RUN npm run build
 
-# Используем легковесный образ Nginx для запуска
+# Stage 2: Serve with Nginx
 FROM nginx:alpine
-
-# Копируем собранные файлы из предыдущего этапа
-COPY --from=build /app/dist /usr/share/nginx/html
+COPY --from=builder /app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-EXPOSE 3000
-
-# Запускаем Nginx
+EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
