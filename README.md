@@ -2,7 +2,7 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.7.2-blue?logo=typescript)
 ![Vite](https://img.shields.io/badge/Vite-6.2.0-purple?logo=vite)
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4.0.14-blueviolet?logo=tailwind-css)
-# Отклик - Приложение для найма, поиска сотрудников и отклика на вакансии
+# [Отклик - Приложение для найма, поиска сотрудников и отклика на вакансии](https://otclickfrontend-vannesals-projects.vercel.app/ot_click/#/)
 ## Описание
 
 Отклик - это современное веб-приложение для удобного найма и отклика на вакансии. Проект состоит из двух частей:
