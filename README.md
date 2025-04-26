@@ -35,9 +35,10 @@ cd frontend
 npm install
 npm dev # режим разработки
 npm build # сборка для продакшена
+```
+## 🌐 Демо
 
-🌐 Демо
-Приложение доступно по адресу:
-https://marketplace-frontend-vannesals-projects.vercel.app
+### Приложение доступно по адресу:
+https://otclickfrontend-vannesals-projects.vercel.app/ot_click/#/
 
 Для локальной разработки используйте http://localhost:5173
