@@ -1,12 +1,15 @@
 import { FC, useEffect } from "react";
 import { Sidebar } from "./Sidebar";
 
-import { useState } from 'react';
+import { useState } from "react";
 import { StoreApp, useAppDispatch } from "../store";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { changeVacancies, fetchCreateVacancy } from "../store/vacancies.slice";
-import { changePublishedVacanciesID, updatePublishedVacanciesID } from "../store/user.slice";
+import {
+  changePublishedVacanciesID,
+  updatePublishedVacanciesID,
+} from "../store/user.slice";
 
 export const CreateVacancy: FC = () => {
   const role = useSelector((store: StoreApp) => store.user.role);
@@ -19,33 +22,44 @@ export const CreateVacancy: FC = () => {
     if (role === "applicant") {
       navigate("/vacancies");
     }
-  }, [])
+  }, [navigate, role]);
   const INITIAL_FORM_STATE = {
-    title: '',
-    description: '',
-    location: '',
-    salary: '',
-    englishLvl: 'Не требуется',
-    grade: 'Не указано',
-    tags: '',
-    experience: 'Не указано',
-    skills: '',
-    employmentType: 'Полная занятость',
-    category_id: 'IT'
+    title: "",
+    description: "",
+    location: "",
+    salary: "",
+    englishLvl: "Не требуется",
+    grade: "Не указано",
+    tags: "",
+    experience: "Не указано",
+    skills: "",
+    employmentType: "Полная занятость",
+    category_id: "IT",
   };
   const [formData, setFormData] = useState(INITIAL_FORM_STATE);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const result = await dispatch(fetchCreateVacancy({ data: { ...formData, companyName } })).unwrap();
-    const newArray = await dispatch(updatePublishedVacanciesID({username: username, newPublishedVacanciesID: result[0].id}));
+    const result = await dispatch(
+      fetchCreateVacancy({ data: { ...formData, companyName } }),
+    ).unwrap();
+    const newArray = await dispatch(
+      updatePublishedVacanciesID({
+        username: username,
+        newPublishedVacanciesID: result[0].id,
+      }),
+    );
     dispatch(changePublishedVacanciesID(newArray.payload as number[]));
-    dispatch(changeVacancies([...vacancies,result[0]]))
+    dispatch(changeVacancies([...vacancies, result[0]]));
     setFormData(INITIAL_FORM_STATE);
   };
 
@@ -54,12 +68,16 @@ export const CreateVacancy: FC = () => {
       <Sidebar />
       <div className=" w-full">
         <div className="max-w-6xl mx-auto p-6 m-6 bg-white rounded-lg shadow-md w-[70vw]">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">Создать новую вакансию</h2>
+          <h2 className="text-2xl font-bold text-gray-800 mb-6">
+            Создать новую вакансию
+          </h2>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Название вакансии*</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Название вакансии*
+                  </label>
                   <input
                     type="text"
                     name="title"
@@ -72,7 +90,9 @@ export const CreateVacancy: FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Описание*</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Описание*
+                  </label>
                   <textarea
                     name="description"
                     value={formData.description}
@@ -85,7 +105,9 @@ export const CreateVacancy: FC = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Локация*</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Локация*
+                  </label>
                   <input
                     type="text"
                     name="location"
@@ -101,7 +123,9 @@ export const CreateVacancy: FC = () => {
               {/* Детали вакансии */}
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Зарплата*</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Зарплата*
+                  </label>
                   <div className="relative">
                     <input
                       type="number"
@@ -114,12 +138,16 @@ export const CreateVacancy: FC = () => {
                       min={0}
                       required
                     />
-                    <span className="absolute right-3 top-2 text-gray-500">₽</span>
+                    <span className="absolute right-3 top-2 text-gray-500">
+                      ₽
+                    </span>
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Уровень английского</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Уровень английского
+                  </label>
                   <select
                     name="englishLvl"
                     value={formData.englishLvl}
@@ -130,14 +158,18 @@ export const CreateVacancy: FC = () => {
                     <option value="Beginner">Beginner</option>
                     <option value="Elementary">Elementary</option>
                     <option value="Intermediate">Intermediate</option>
-                    <option value="Upper-Intermediate">Upper-Intermediate</option>
+                    <option value="Upper-Intermediate">
+                      Upper-Intermediate
+                    </option>
                     <option value="Advanced">Advanced</option>
                     <option value="Proficiency">Proficiency</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Грейд</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Грейд
+                  </label>
                   <select
                     name="grade"
                     value={formData.grade}
@@ -157,7 +189,9 @@ export const CreateVacancy: FC = () => {
             {/* Теги и навыки */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Теги (через запятую)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Теги (через запятую)
+                </label>
                 <input
                   type="text"
                   name="tags"
@@ -169,7 +203,9 @@ export const CreateVacancy: FC = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Опыт работы</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Опыт работы
+                </label>
                 <select
                   name="experience"
                   value={formData.experience}
@@ -186,7 +222,9 @@ export const CreateVacancy: FC = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Ключевые навыки</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Ключевые навыки
+              </label>
               <textarea
                 name="skills"
                 value={formData.skills}
@@ -198,16 +236,26 @@ export const CreateVacancy: FC = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Тип занятости</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Тип занятости
+              </label>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-                {['Полная занятость', 'Частичная занятость', 'Проектная работа', 'Стажировка'].map(type => (
+                {[
+                  "Полная занятость",
+                  "Частичная занятость",
+                  "Проектная работа",
+                  "Стажировка",
+                ].map((type) => (
                   <label key={type} className="flex items-center space-x-2">
                     <input
                       type="radio"
                       name="employmentType"
                       value={type}
-                      checked={formData.employmentType === type|| 
-                        (formData.employmentType === '' && type === 'Полная занятость')}
+                      checked={
+                        formData.employmentType === type ||
+                        (formData.employmentType === "" &&
+                          type === "Полная занятость")
+                      }
                       onChange={handleChange}
                       className="h-4 w-4 text-blue-600 focus:ring-blue-500"
                     />

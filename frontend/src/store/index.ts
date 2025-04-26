@@ -9,7 +9,7 @@ const rootReducer = combineReducers({
   vacancies: vacanciesReducer,
   auth: authReducer,
   user: userReducer,
-  errors: errorsReducer
+  errors: errorsReducer,
 });
 
 export const store = configureStore({

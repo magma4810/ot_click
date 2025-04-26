@@ -21,14 +21,14 @@ export const Sidebar: FC = () => {
           href={"/ot_click/#/vacancies"}
           hash={"#/vacancies"}
         />
-        {role === 'applicant' ?
+        {role === "applicant" ? (
           <IconSidebar
             src={my_vacancies}
             title={"My Vacancies"}
             href={"/ot_click/#/my-vacancies"}
             hash={"#/my-vacancies"}
           />
-        :
+        ) : (
           <>
             <IconSidebar
               src={my_vacancies}
@@ -43,7 +43,7 @@ export const Sidebar: FC = () => {
               hash={"#/create-vacancy"}
             />
           </>
-        }
+        )}
       </div>
       <div className=" h-[18%]">
         <IconSidebar
@@ -57,7 +57,6 @@ export const Sidebar: FC = () => {
 };
 
 const IconSidebar: FC<IconSidebarProps> = ({ ...props }) => {
-
   const navigate = useNavigate();
   const isActive = (path: string) => {
     return location.hash === path;
@@ -86,8 +85,8 @@ const IconSidebar: FC<IconSidebarProps> = ({ ...props }) => {
 
   const handleClick = (e: React.MouseEvent) => {
     if (props.title === "Logout") {
-      sessionStorage.removeItem('role');
-      sessionStorage.removeItem('username');
+      sessionStorage.removeItem("role");
+      sessionStorage.removeItem("username");
       dispatch(resetUserForm());
       dispatch(logout());
       handleLogout(e);
@@ -97,10 +96,11 @@ const IconSidebar: FC<IconSidebarProps> = ({ ...props }) => {
   return (
     <a href={props.href} onClick={handleClick} className="block">
       <div
-        className={`flex items-center flex-col ${props.hash && isActive(props.hash)
+        className={`flex items-center flex-col ${
+          props.hash && isActive(props.hash)
             ? "text-emerald-200 font-bold border-l-3 text-glow"
             : ""
-          } text-xl`}
+        } text-xl`}
       >
         <img src={props.src} alt="" className="w-[35%] h-auto" />
         <span>{props.title}</span>

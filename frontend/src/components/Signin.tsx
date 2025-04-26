@@ -4,8 +4,17 @@ import { useSelector } from "react-redux";
 import { login } from "../store/auth.slice";
 import { useNavigate } from "react-router-dom";
 import { StoreApp, useAppDispatch } from "../store";
-import {changeRole, getInfoApplicant, getInfoEmployer } from "../store/user.slice";
-import { changeErrorPassword, changeErrorUsername, changeErrorUserNotFound,changeErrorUserPassword } from "../store/errors.slice";
+import {
+  changeRole,
+  getInfoApplicant,
+  getInfoEmployer,
+} from "../store/user.slice";
+import {
+  changeErrorPassword,
+  changeErrorUsername,
+  changeErrorUserNotFound,
+  changeErrorUserPassword,
+} from "../store/errors.slice";
 
 export const Signin: FC = () => {
   const API_URL = import.meta.env.VITE_API_URL;
@@ -15,7 +24,6 @@ export const Signin: FC = () => {
   const password = useSelector((store: StoreApp) => store.user.password);
 
   const handleSubmit = async (e: React.MouseEvent) => {
-
     e.preventDefault();
     if (password === "") {
       dispatch(changeErrorPassword(true));
@@ -41,27 +49,27 @@ export const Signin: FC = () => {
             role: dataUser.role,
           }),
         });
-        
+
         if (!loginUser.ok) {
           throw new Error("Login failed");
         }
-        if(dataUser.error){
+        if (dataUser.error) {
           dispatch(changeErrorUserNotFound(true));
           throw new Error("User not found");
         }
-        if(dataUser.password !== password){
+        if (dataUser.password !== password) {
           dispatch(changeErrorUserPassword(true));
           throw new Error("password failed");
         }
 
         const data = await loginUser.json();
         dispatch(login(data.user));
-        sessionStorage.setItem('role', dataUser.role);
-        sessionStorage.setItem('username', username);
+        sessionStorage.setItem("role", dataUser.role);
+        sessionStorage.setItem("username", username);
         dispatch(changeRole(dataUser.role));
-        if(dataUser.role === "applicant"){
+        if (dataUser.role === "applicant") {
           dispatch(getInfoApplicant(username));
-        }else{
+        } else {
           dispatch(getInfoEmployer(username));
         }
         navigate("/vacancies");
@@ -69,7 +77,6 @@ export const Signin: FC = () => {
         console.error("Login error:", error);
       }
     }
-
   };
 
   return (

@@ -3,151 +3,176 @@ import { userState } from "../types";
 import { changeLoading } from "./vacancies.slice";
 
 const initialState: userState = {
-    username: sessionStorage.getItem('username') || "",
-    password: "",
-    repeatPassword: "",
-    companyName: "",
-    subscribeVacanciesID: [],
-    publishedVacanciesID: [],
-    role: sessionStorage.getItem('role') || ""
+  username: sessionStorage.getItem("username") || "",
+  password: "",
+  repeatPassword: "",
+  companyName: "",
+  subscribeVacanciesID: [],
+  publishedVacanciesID: [],
+  role: sessionStorage.getItem("role") || "",
 };
 const API_URL = import.meta.env.VITE_API_URL;
 
 export const getInfoApplicant = createAsyncThunk(
-    'user/getInfoApplicant',
-    async (username: string, { dispatch }) => {
-      const response = await fetch(`${API_URL}/getInfoApplicant/${username}`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include"
-      });
-  
-      if (!response.ok) {
-        throw new Error('Не удалось загрузить данные соискателя');
-      }
-  
-      const data = await response.json();
-      const applicantData = data[0];
+  "user/getInfoApplicant",
+  async (username: string, { dispatch }) => {
+    const response = await fetch(`${API_URL}/getInfoApplicant/${username}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    });
 
-      dispatch(changeSubscribeVacanciesID(applicantData.subscribeVacanciesID));
-      dispatch(changeLoading(false));
-      return applicantData; 
+    if (!response.ok) {
+      throw new Error("Не удалось загрузить данные соискателя");
     }
-  );
 
-  export const getInfoEmployer = createAsyncThunk(
-    'user/getInfoApplicant',
-    async (username: string, { dispatch }) => {
-      const response = await fetch(`${API_URL}/getInfoEmployer/${username}`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include"
-      });
-  
-      if (!response.ok) {
-        throw new Error('Не удалось загрузить данные работадателя');
-      }
-  
-      const data = await response.json();
-      const applicantData = data[0];
+    const data = await response.json();
+    const applicantData = data[0];
 
-      dispatch(changePublishedVacanciesID(applicantData.vacanciesID));
-      dispatch(changeCompanyName(applicantData.companyNameUser));
-      dispatch(changeLoading(false));
-      return applicantData; 
+    dispatch(changeSubscribeVacanciesID(applicantData.subscribeVacanciesID));
+    dispatch(changeLoading(false));
+    return applicantData;
+  },
+);
+
+export const getInfoEmployer = createAsyncThunk(
+  "user/getInfoApplicant",
+  async (username: string, { dispatch }) => {
+    const response = await fetch(`${API_URL}/getInfoEmployer/${username}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    });
+
+    if (!response.ok) {
+      throw new Error("Не удалось загрузить данные работадателя");
     }
-  );
+
+    const data = await response.json();
+    const applicantData = data[0];
+
+    dispatch(changePublishedVacanciesID(applicantData.vacanciesID));
+    dispatch(changeCompanyName(applicantData.companyNameUser));
+    dispatch(changeLoading(false));
+    return applicantData;
+  },
+);
 
 export const updateSubscriptionsID = createAsyncThunk(
-    'user/updateSubscribeVacanciesID',
-    async ({ username }: { username: string }, { getState }) => {
-      const { user } = getState() as { user: userState };
-      const response = await fetch(`${API_URL}/updateSubscribeVacanciesID/${username}`, {
+  "user/updateSubscribeVacanciesID",
+  async ({ username }: { username: string }, { getState }) => {
+    const { user } = getState() as { user: userState };
+    const response = await fetch(
+      `${API_URL}/updateSubscribeVacanciesID/${username}`,
+      {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
         body: JSON.stringify({
-          subscribeVacanciesID: user.subscribeVacanciesID
+          subscribeVacanciesID: user.subscribeVacanciesID,
         }),
-      });
-      return response.json();
-    }
-  );
+      },
+    );
+    return response.json();
+  },
+);
 
-
- export const updatePublishedVacanciesID = createAsyncThunk(
-  'user/updatePublishedVacanciesID',
-  async ({ username, newPublishedVacanciesID }: { 
-    username: string, 
-    newPublishedVacanciesID: number 
-  }, { getState }) => {
-    
+export const updatePublishedVacanciesID = createAsyncThunk(
+  "user/updatePublishedVacanciesID",
+  async (
+    {
+      username,
+      newPublishedVacanciesID,
+    }: {
+      username: string;
+      newPublishedVacanciesID: number;
+    },
+    { getState },
+  ) => {
     const { user } = getState() as { user: userState };
-    
+
     const updatedArray = [
-      ...(user.publishedVacanciesID || []), 
-      newPublishedVacanciesID
+      ...(user.publishedVacanciesID || []),
+      newPublishedVacanciesID,
     ];
 
-    const response = await fetch(`${API_URL}/updatePublishedVacanciesID/${username}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify({
-        publishedVacanciesID: updatedArray
-      }),
-    });
+    const response = await fetch(
+      `${API_URL}/updatePublishedVacanciesID/${username}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          publishedVacanciesID: updatedArray,
+        }),
+      },
+    );
 
     if (!response.ok) {
-      throw new Error('Failed to update published vacancies');
+      throw new Error("Failed to update published vacancies");
     }
     return updatedArray;
-  }
+  },
 );
-  
+
 export const userSlice = createSlice({
-    name: "user",
-    initialState,
-    reducers: {
-        changeUsername: (state, action: PayloadAction<string>) => {
-            state.username = action.payload;
-        },
-        changePassword: (state, action: PayloadAction<string>) => {
-            state.password = action.payload;
-        },
-        changeRepeatPassword: (state, action: PayloadAction<string>) => {
-            state.repeatPassword = action.payload;
-        },
-        changeCompanyName: (state, action: PayloadAction<string>) => {
-            state.companyName = action.payload;
-        },
-        changeRole: (state, action: PayloadAction<string>) => {
-            state.role = action.payload;
-        },
-        resetUserForm: (state) => {
-            state.username = '';
-            state.password = '';
-            state.repeatPassword = '';
-            state.companyName = '';
-            state.subscribeVacanciesID = [];
-            state.role = '';
-          },
-          addSubscribeVacanciesID: (state, action: PayloadAction<number>) => {
-            state.subscribeVacanciesID = [...state.subscribeVacanciesID, action.payload];
-        },
-        deleteSubscribeVacanciesID: (state, action: PayloadAction<number>) => {
-            state.subscribeVacanciesID = state.subscribeVacanciesID.filter((id) => id !== action.payload);
-        },
-        changeSubscribeVacanciesID: (state, action: PayloadAction<number[]>) => {
-            state.subscribeVacanciesID = action.payload;
-        },
-        changePublishedVacanciesID: (state, action: PayloadAction<number[]>) => {
-          state.publishedVacanciesID = action.payload;
-      },
+  name: "user",
+  initialState,
+  reducers: {
+    changeUsername: (state, action: PayloadAction<string>) => {
+      state.username = action.payload;
     },
-    
+    changePassword: (state, action: PayloadAction<string>) => {
+      state.password = action.payload;
+    },
+    changeRepeatPassword: (state, action: PayloadAction<string>) => {
+      state.repeatPassword = action.payload;
+    },
+    changeCompanyName: (state, action: PayloadAction<string>) => {
+      state.companyName = action.payload;
+    },
+    changeRole: (state, action: PayloadAction<string>) => {
+      state.role = action.payload;
+    },
+    resetUserForm: (state) => {
+      state.username = "";
+      state.password = "";
+      state.repeatPassword = "";
+      state.companyName = "";
+      state.subscribeVacanciesID = [];
+      state.role = "";
+    },
+    addSubscribeVacanciesID: (state, action: PayloadAction<number>) => {
+      state.subscribeVacanciesID = [
+        ...state.subscribeVacanciesID,
+        action.payload,
+      ];
+    },
+    deleteSubscribeVacanciesID: (state, action: PayloadAction<number>) => {
+      state.subscribeVacanciesID = state.subscribeVacanciesID.filter(
+        (id) => id !== action.payload,
+      );
+    },
+    changeSubscribeVacanciesID: (state, action: PayloadAction<number[]>) => {
+      state.subscribeVacanciesID = action.payload;
+    },
+    changePublishedVacanciesID: (state, action: PayloadAction<number[]>) => {
+      state.publishedVacanciesID = action.payload;
+    },
+  },
 });
 
 export const userReducer = userSlice.reducer;
 
-export const { changeUsername,changePublishedVacanciesID,deleteSubscribeVacanciesID,addSubscribeVacanciesID,changeSubscribeVacanciesID, changePassword,changeRepeatPassword,changeCompanyName,changeRole,resetUserForm } = userSlice.actions;
+export const {
+  changeUsername,
+  changePublishedVacanciesID,
+  deleteSubscribeVacanciesID,
+  addSubscribeVacanciesID,
+  changeSubscribeVacanciesID,
+  changePassword,
+  changeRepeatPassword,
+  changeCompanyName,
+  changeRole,
+  resetUserForm,
+} = userSlice.actions;

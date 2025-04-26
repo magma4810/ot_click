@@ -17,9 +17,11 @@ export const Vacancies: FC = () => {
         </span>
       ) : (
         <div className="flex flex-wrap w-full justify-around items-start p-4 overflow-y-auto">
-          {vacancies.filter((vacancy) => vacancy.is_active).map((data) => (
-            <VacancyCard data={data} key={data.id} title={"Ot`click"}/>
-          ))}
+          {vacancies
+            .filter((vacancy) => vacancy.is_active)
+            .map((data) => (
+              <VacancyCard data={data} key={data.id} title={"Ot`click"} />
+            ))}
         </div>
       )}
     </div>

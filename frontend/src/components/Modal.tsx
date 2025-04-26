@@ -18,12 +18,12 @@ export const Modal: FC<ModalProps> = ({ children, onClick, ...props }) => {
         <div className="flex flex-col items-center justify-evenly h-[100%] w-[30%]">
           <span className="text-4xl font-medium">{props.title}</span>
           <div className="flex w-[100%] h-[50%] flex-col justify-evenly">
-            <Input placeholder={"Username"} img={user} value={username}/>
-            <Input placeholder={"Password"} img={key} value={password}/>
+            <Input placeholder={"Username"} img={user} value={username} />
+            <Input placeholder={"Password"} img={key} value={password} />
             {children}
           </div>
           <button
-            onClick={onClick} 
+            onClick={onClick}
             className="flex justify-center items-center bg-emerald-400 w-[50%] h-[10%] rounded-3xl cursor-pointer"
           >
             {props.name}
@@ -54,4 +54,3 @@ export const Modal: FC<ModalProps> = ({ children, onClick, ...props }) => {
     </div>
   );
 };
-

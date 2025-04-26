@@ -10,7 +10,7 @@ export type errorsState = {
   errorPasswordRepeat: boolean;
   errorUserNotFound: boolean;
   errorUserPassword: boolean;
-}
+};
 
 export type userState = {
   username: string;
@@ -20,7 +20,7 @@ export type userState = {
   subscribeVacanciesID: Array<number>;
   publishedVacanciesID: Array<number>;
   role: string;
-}
+};
 
 export type ModalProps = {
   name: string;
@@ -73,4 +73,4 @@ export type VacancyCardProps = {
 export type MyVacanciesProps = {
   title: string;
   description: string;
-}
+};

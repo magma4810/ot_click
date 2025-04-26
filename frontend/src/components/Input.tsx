@@ -1,11 +1,11 @@
 import { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { StoreApp } from "../store";
-import { 
-  changeRepeatPassword, 
-  changePassword, 
+import {
+  changeRepeatPassword,
+  changePassword,
   changeUsername,
-  changeCompanyName
+  changeCompanyName,
 } from "../store/user.slice";
 import { InputProps } from "../types";
 import { createSelector } from "@reduxjs/toolkit";
@@ -19,19 +19,23 @@ const selectErrors = createSelector(
     username: errors.errorUsername,
     companyName: errors.errorCompanyName,
     userNotFound: errors.errorUserNotFound,
-    errorUserPassword: errors.errorUserPassword
-  })
+    errorUserPassword: errors.errorUserPassword,
+  }),
 );
 
 export const Input: FC<InputProps> = ({ placeholder, img, value }) => {
   const dispatch = useDispatch();
-  
+
   const errors = useSelector(selectErrors);
   const errorMessages = {
-    'Password': errors.errorUserPassword ? 'Неверный пароль':'Пароль не должен быть пустым',
-    'Repeat Password': 'Пароли должны совпадать',
-    'Username': errors.userNotFound ? 'Пользователь не найден' : 'Поле Username не должно быть пустым',
-    'Company Name': 'Название компании обязательно'
+    Password: errors.errorUserPassword
+      ? "Неверный пароль"
+      : "Пароль не должен быть пустым",
+    "Repeat Password": "Пароли должны совпадать",
+    Username: errors.userNotFound
+      ? "Пользователь не найден"
+      : "Поле Username не должно быть пустым",
+    "Company Name": "Название компании обязательно",
   };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,19 +58,26 @@ export const Input: FC<InputProps> = ({ placeholder, img, value }) => {
 
   const hasError = (() => {
     switch (placeholder) {
-      case 'Password': return errors.password || errors.errorUserPassword;
-      case 'Repeat Password': return errors.repeatPassword;
-      case 'Username': return errors.username || errors.userNotFound;
-      case 'Company Name': return errors.companyName;
-      default: return false;
+      case "Password":
+        return errors.password || errors.errorUserPassword;
+      case "Repeat Password":
+        return errors.repeatPassword;
+      case "Username":
+        return errors.username || errors.userNotFound;
+      case "Company Name":
+        return errors.companyName;
+      default:
+        return false;
     }
   })();
 
   return (
     <div className="flex flex-col relative mb-8">
-      <div className={`bg-amber-50 h-12 flex items-center rounded border border-gray-300 p-2 ${
-        hasError ? "border-red-500 border-2" : ""
-      }`}>
+      <div
+        className={`bg-amber-50 h-12 flex items-center rounded border border-gray-300 p-2 ${
+          hasError ? "border-red-500 border-2" : ""
+        }`}
+      >
         <img src={img} alt={placeholder} className="w-6 h-6 mr-2" />
         <input
           placeholder={placeholder}
@@ -75,7 +86,7 @@ export const Input: FC<InputProps> = ({ placeholder, img, value }) => {
           value={value}
         />
       </div>
-      
+
       {hasError && (
         <span className="text-xs text-red-500 absolute -bottom-5 left-0">
           {errorMessages[placeholder as keyof typeof errorMessages]}

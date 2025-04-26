@@ -7,41 +7,49 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { login } from "../store/auth.slice";
 import { StoreApp } from "../store";
-import { changeRole,resetUserForm } from "../store/user.slice";
-import { changeErrorCompanyName, changeErrorPassword,changeErrorPasswordRepeat,changeErrorUsername, resetErrors } from "../store/errors.slice";
+import { changeRole, resetUserForm } from "../store/user.slice";
+import {
+  changeErrorCompanyName,
+  changeErrorPassword,
+  changeErrorPasswordRepeat,
+  changeErrorUsername,
+  resetErrors,
+} from "../store/errors.slice";
 
 export const Signup: FC<SignupProps> = ({ children }) => {
   const API_URL = import.meta.env.VITE_API_URL;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const repeatPassword = useSelector((store: StoreApp) => store.user.repeatPassword);
+  const repeatPassword = useSelector(
+    (store: StoreApp) => store.user.repeatPassword,
+  );
   const username = useSelector((store: StoreApp) => store.user.username);
   const password = useSelector((store: StoreApp) => store.user.password);
   const companyName = useSelector((store: StoreApp) => store.user.companyName);
   const role = useSelector((store: StoreApp) => store.user.role);
   useEffect(() => {
-    dispatch(changeRole('applicant'));
+    dispatch(changeRole("applicant"));
     return () => {
       dispatch(resetUserForm());
-      dispatch(resetErrors())
+      dispatch(resetErrors());
     };
   }, [dispatch]);
   const handleSubmit = async (e: React.MouseEvent) => {
     e.preventDefault();
 
-    if(password ===""){
+    if (password === "") {
       dispatch(changeErrorPassword(true));
-    }else if(repeatPassword !== password || repeatPassword === ""){
+    } else if (repeatPassword !== password || repeatPassword === "") {
       dispatch(changeErrorPasswordRepeat(true));
-    }else if(username === ""){
+    } else if (username === "") {
       dispatch(changeErrorUsername(true));
-    }else if(role === "employer" && companyName === ""){
+    } else if (role === "employer" && companyName === "") {
       dispatch(changeErrorCompanyName(true));
-    }else{
+    } else {
       try {
         let response;
-        
-        if(role === "employer"){
+
+        if (role === "employer") {
           response = await fetch(`${API_URL}/registerEmployer`, {
             method: "POST",
             headers: {
@@ -52,11 +60,10 @@ export const Signup: FC<SignupProps> = ({ children }) => {
               username: username,
               password: password,
               companyNameUser: companyName,
-              role: "employer"
+              role: "employer",
             }),
           });
-        }else{
-          
+        } else {
           response = await fetch(`${API_URL}/registerApplicant`, {
             method: "POST",
             headers: {
@@ -66,16 +73,16 @@ export const Signup: FC<SignupProps> = ({ children }) => {
             body: JSON.stringify({
               username: username,
               password: password,
-              role: "applicant"
+              role: "applicant",
             }),
           });
           dispatch(changeRole("applicant"));
         }
-  
+
         if (!response.ok) {
           throw new Error("Register failed");
         }
-  
+
         const data = await response.json();
         dispatch(login(data.user));
 
@@ -84,7 +91,6 @@ export const Signup: FC<SignupProps> = ({ children }) => {
         console.error("Login error:", error);
       }
     }
-   
   };
   return (
     <Modal
@@ -94,7 +100,11 @@ export const Signup: FC<SignupProps> = ({ children }) => {
       title={"Member Signup"}
       onClick={handleSubmit}
     >
-      <Input placeholder={"Repeat Password"} img={key} value={repeatPassword as string}/>
+      <Input
+        placeholder={"Repeat Password"}
+        img={key}
+        value={repeatPassword as string}
+      />
       {children}
     </Modal>
   );

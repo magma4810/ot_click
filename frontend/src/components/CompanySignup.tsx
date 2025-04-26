@@ -10,11 +10,11 @@ export const CompanySignup: FC = () => {
   const companyName = useSelector((store: StoreApp) => store.user.companyName);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(changeRole("employer")); 
+    dispatch(changeRole("employer"));
   }, [dispatch]);
   return (
     <Signup>
-      <Input placeholder={"Company Name"} img={company} value={companyName}/>
+      <Input placeholder={"Company Name"} img={company} value={companyName} />
     </Signup>
   );
 };

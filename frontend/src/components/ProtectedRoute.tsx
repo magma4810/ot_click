@@ -1,12 +1,13 @@
 import { useSelector } from "react-redux";
 import { useAuthCheck } from "./hooks/useAuthCheck";
 import { StoreApp } from "../store";
-import { Navigate, useLocation,Outlet } from "react-router-dom";
-
+import { Navigate, useLocation, Outlet } from "react-router-dom";
 
 export const ProtectedRoute = () => {
   const isAuthChecked = useAuthCheck();
-  const isAuthenticated = useSelector((store: StoreApp) => store.auth.isAuthenticated);
+  const isAuthenticated = useSelector(
+    (store: StoreApp) => store.auth.isAuthenticated,
+  );
   const location = useLocation();
 
   if (!isAuthChecked) {
@@ -17,5 +18,9 @@ export const ProtectedRoute = () => {
     );
   }
 
-  return isAuthenticated ? <Outlet /> : <Navigate to="/signin" state={{ from: location }} replace />;
+  return isAuthenticated ? (
+    <Outlet />
+  ) : (
+    <Navigate to="/signin" state={{ from: location }} replace />
+  );
 };
